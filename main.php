@@ -27,5 +27,12 @@
     </h1>
     <br>
     <p>Ein Login ist erforderlich.</p>
+    <button onclick="window.location.href='login.php'" type="button" class="btn btn-primary">Login</button>
 </body>
+<footer>
+    <p>© 2024 thegreenonion, skeund89, leg0batman
+        <br>
+        Kontakt via GitHub
+    </p>
+</footer>
 </html>
