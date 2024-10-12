@@ -9,14 +9,43 @@ function CONNECT()
     $passwd = "UG2aepai4g";
     
     // Datenbankverbindung herstellen
-    try {
+    try 
+    {
         $db = new PDO("mysql:dbname=$datenbank;host=$host", $user, $passwd);
         $db -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch(PDOException $e) {
+    } catch(PDOException $e) 
+    {
         die("Datenbankverbindung gescheitert: " . $e->getMessage());
     }
 
     return $db;
+}
+
+function LOGIN($pdo_db, $username, $password)
+{
+    try
+    {
+        $statement = $pdo_db->prepare("SELECT username, BID FROM users WHERE username =? AND password=?");
+        $statement->execute([$username, $password]);
+    }
+    catch(Exception $e)
+    {
+        die("Loginvorgang gescheitert: " . $e->getMessage());
+    }
+
+    $result = $statement->fetchAll();
+
+    if(count($result) != 0)
+    {
+        $_SESSION['username'] = $result[0]['username'];
+        $_SESSION['BID'] = $result[0]['BID'];
+        echo "<script type='text/javascript'>location.href = 'https://hmbldtw.spdns.org/~hwalde/web/g_todo_project/lin-todo/dashboard.php';</script>";
+        exit();
+    }
+    else
+    {
+        echo "Die Eingabe war falsch. Bitte versuche es normal.";
+    }
 }
 ?>
 
@@ -31,17 +60,21 @@ function CONNECT()
 <body>
     <h1>Login</h1>
    
-    <form action="dashboard.php">
-        <input type="text" name="form_username">
-        <input type="password" name="form_password">
-        <input type="submit">
-    </form>
-    
     <?php 
         if(isset($_POST['form_username']) && isset($_POST['form_password']))
         {
+            $username = $_POST['form_username'];
+            $password = $_POST['form_password'];
+            
             $db = CONNECT();
+            LOGIN($db, $username, $password);
         }
     ?>
+
+    <form method="post">
+        <input type="text" id="bnameId" name="form_username" placeholder="Benutzername" aria-label="Benutzername">
+        <input type="password" id="passwortId" name="form_password" placeholder="Passwort" aria-label="Passwort">
+        <input type="submit" value="Anmelden">
+    </form>
 </body>
 </html>
