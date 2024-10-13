@@ -46,6 +46,13 @@
     <div class="d-flex justify-content-center">
         <button onclick="window.location.href='login.php'" type="button" class="btn btn-primary btn-lg">Login</button>
         <button onclick="window.location.href='signup.php'" type="button" class="btn btn-primary btn-lg">Registrieren</button>
+        <?php
+        if(isset($_SESSION['BID']))
+        {
+            $command = "window.location.href='logout.php'";
+            echo "<button onclick=\"$command\" type='button' class='btn btn-primary btn-lg'>Abmelden</button>";
+        }
+        ?>
     </div>
     <?php
         $datenbank = "eulbert_gtodo";
@@ -65,15 +72,16 @@
         $sql->execute();
         $result = $sql->fetch();
         echo "<div>";
-            if(!isset($_SESSION['username']))
+            if(!isset($_SESSION["username"]))
             {
-                echo "<span style='color: red; float: right; font-weight: bold'>
+                echo "<span style='color: red; float: right; font-weight: bold; margin-right: 20px;'>
                 Du bist noch nicht angemeldet!
                 </span>";
                 
-                echo "<span style='color: red; font-weight: bold;'>
-                Bereits " . $result[0] . " Menschen benutzen TODO!
+                echo "<span style='color: red; font-weight: bold; margin-left: 20px;'>
+                Bereits " . $result[0] . " Menschen benutzen TODO!</span>
                 <br>
+                <span style='color: red; font-weight: bold; margin-left: 20px;'>
                 Sei der nächste: 
                 <a href='./signup.php'>Registrieren!</a>
                 </span>";
@@ -85,11 +93,22 @@
             }
         echo "</div>";
     ?>
+    <div class="d-flex justify-content-center">
+        <?php
+        if(isset($_SESSION['BID']))
+        {
+            $command = "window.location.href='getlists.php'";
+            echo "<button onclick=\"$command\" type='button' class='btn btn-primary btn-lg'>Listen anzeigen</button>";
+            }
+        ?>
+    </div>
 </body>
 <footer>
     <p>© 2024 thegreenonion, skeund89, leg0batman
         <br>
         Kontakt via GitHub
+        <br>
+        Benutzerzahl: <?php echo $result[0]; ?>
     </p>
 </footer>
 </html>
