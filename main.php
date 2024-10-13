@@ -1,25 +1,7 @@
-<!--
- * This file contains the main HTML structure for the TODO application.
- * It includes a welcome message, links to the GitHub profiles of the contributors,
- * and buttons for user login and registration.
- * 
- * The page uses Bootstrap for styling and includes custom CSS for additional styling.
- * 
- * Elements:
- * - A header with a welcome message and links to contributors' GitHub profiles.
- * - Two buttons for navigating to the login and signup pages.
- * - A footer with copyright information and a contact note.
- * 
- * Dependencies:
- * - Bootstrap CSS from a CDN.
- * 
- * Custom Styles:
- * - h1: Bold font, centered text, margin-top of 10px.
- * - p: Left margin of 20px.
- * - footer: Fixed position at the bottom, full width, light background color, centered text.
- * - button: Block display, margin of 20px, width of 210px.
- * - .vertical-center: Centered vertically using absolute positioning and transform.
- */-->
+<?php
+    session_start();
+?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -31,9 +13,6 @@
             font-weight: bold;
             text-align: center;
             margin-top: 10px;
-        }
-        p {
-            margin-left: 20px;
         }
         footer {
             position: fixed;
@@ -48,6 +27,9 @@
             display: block;
             margin: 20px;
             width: 210px;
+        }
+        .inline-paragraph {
+            display: inline;
         }
     </style>
 </head>
@@ -65,6 +47,44 @@
         <button onclick="window.location.href='login.php'" type="button" class="btn btn-primary btn-lg">Login</button>
         <button onclick="window.location.href='signup.php'" type="button" class="btn btn-primary btn-lg">Registrieren</button>
     </div>
+    <?php
+        $datenbank = "eulbert_gtodo";
+        $host = "localhost";
+        $user = "eulbert";
+        $passwd = "noh8Ailaey";
+        try 
+        {
+            $db = new PDO("mysql:dbname=$datenbank;host=$host", $user, $passwd);
+            $db -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch(PDOException $e) 
+        {
+            die("Datenbankverbindung gescheitert: " . $e->getMessage());
+        }
+
+        $sql = $db->prepare("SELECT COUNT(*) FROM users");
+        $sql->execute();
+        $result = $sql->fetch();
+        echo "<div>";
+            if(!isset($_SESSION['username']))
+            {
+                echo "<span style='color: red; float: right; font-weight: bold'>
+                Du bist noch nicht angemeldet!
+                </span>";
+                
+                echo "<span style='color: red; font-weight: bold;'>
+                Bereits " . $result[0] . " Menschen benutzen TODO!
+                <br>
+                Sei der nächste: 
+                <a href='./signup.php'>Registrieren!</a>
+                </span>";
+            }
+            else {
+                echo "<span style='color: green; float: right; margin-right: 20px;'>
+                Du bist angemeldet als <span style='color: blue'>" . $_SESSION['username'] . "</span>!
+                </span>";
+            }
+        echo "</div>";
+    ?>
 </body>
 <footer>
     <p>© 2024 thegreenonion, skeund89, leg0batman
