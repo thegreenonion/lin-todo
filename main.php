@@ -65,6 +65,31 @@
         <button onclick="window.location.href='login.php'" type="button" class="btn btn-primary btn-lg">Login</button>
         <button onclick="window.location.href='signup.php'" type="button" class="btn btn-primary btn-lg">Registrieren</button>
     </div>
+    <?php
+        $datenbank = "eulbert_gtodo";
+        $host = "localhost";
+        $user = "eulbert";
+        $passwd = "noh8Ailaey";
+
+        try 
+        {
+            $db = new PDO("mysql:dbname=$datenbank;host=$host", $user, $passwd);
+            $db -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch(PDOException $e) 
+        {
+            die("Datenbankverbindung gescheitert: " . $e->getMessage());
+        }
+
+        $sql = $db->prepare("SELECT COUNT(*) FROM users");
+        $sql->execute();
+        $result = $sql->fetch();
+        echo "<p style='color: red; text-align: right; margin-right: 20px; font-weight: bold'>
+        Bereits " . $result[0] . " Menschen benutzen TODO bereits!
+        <br>
+        Sei der nächste: 
+        <a href='./signup.php'>Registrieren!</a>
+        </p>";
+    ?>
 </body>
 <footer>
     <p>© 2024 thegreenonion, skeund89, leg0batman
