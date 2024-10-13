@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-function CONNECT()
+function Connect()
 {
     $datenbank = "eulbert_gtodo";
     $host = "localhost";
@@ -21,7 +21,7 @@ function CONNECT()
     return $db;
 }
 
-function LOGIN($pdo_db, $username, $password)
+function Login($pdo_db, $username, $password)
 {
     try
     {
@@ -67,8 +67,8 @@ function LOGIN($pdo_db, $username, $password)
             $username = $_POST['form_username'];
             $password = $_POST['form_password'];
             
-            $db = CONNECT();
-            LOGIN($db, $username, $password);
+            $db = Connect();
+            Login($db, $username, $password);
         }
     ?>
 
