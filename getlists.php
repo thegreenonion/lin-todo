@@ -17,13 +17,14 @@
     $result = $stmt->fetchAll();
     foreach($result as $row)
     {
+        $stmt = $db->prepare("SELECT COUNT(*) FROM items WHERE iLID = ?");
+        $stmt->execute([$row['LID']]);
+        $count = $stmt->fetch()[0];
         echo "<div class='container mt-5'>";
         echo "<table class='table table-bordered'>";
-        echo "<thead class='thead-dark'><tr><th>Name</th></tr></thead>";
+        echo "<thead class='thead-dark'><tr><th>Name</th><th>Anzahl Aufgaben</th></tr></thead>";
         echo "<tbody>";
-        foreach($result as $row) {
-            echo "<tr><td>" . htmlspecialchars($row['name']) . "</td></tr>";
-        }
+        echo "<tr><td>" . htmlspecialchars($row['name']) . "</td><td>$count</td></tr>";
         echo "</tbody>";
         echo "</table>";
         echo "</div>";

@@ -98,6 +98,11 @@
                     include("getlists.php");
                 }
             }
+            else {
+                echo "<div style='text-align: center'>";
+                echo "<span>Hier könnte ihre Liste stehen!</span>";
+                echo "</div>";
+            }
         ?>
     </div>
 </body>
