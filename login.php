@@ -1,4 +1,6 @@
 <?php
+include 'Hash.php';
+
 function Connect()
 {
     $datenbank = "eulbert_gtodo";
@@ -18,13 +20,6 @@ function Connect()
 
     return $db;
 }
-function hash_password($password, $salt, $pepper)
-{
-    $peppered_password = hash_hmac("sha256", $password, $pepper);
-    $hashed_password = password_hash($peppered_password . $salt, PASSWORD_BCRYPT);
-
-    return $hashed_password;
-}
 
 function Login($pdo_db, $username, $password)
 {
@@ -41,14 +36,15 @@ function Login($pdo_db, $username, $password)
     
     // fetch database password + salt and hash password of form with salt and pepper 
     $fetched_statement = $statement->fetch();
+    
     $db_password = $fetched_statement['password'];
     $salt = $fetched_statement['salt'];
     
     $pepper = 'yoxxxxxxx45hghjkj';
-    $hashed_password = hash_password($password, $salt, $pepper);
+    $bool_password = verifyPassword($password, $db_password, $salt, $pepper);
 
     // compare database password with freshly hashed password
-    if ($db_password != $hashed_password)
+    if ($bool_password == FALSE)
     {
         echo "Die Eingabe war falsch. Bitte versuche es normal.";
         exit();
