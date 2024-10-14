@@ -1,5 +1,5 @@
 <?php
-include 'Hash.php';
+include("Hash.php");
 
 $datenbank = "eulbert_gtodo";
 $host = "localhost";
@@ -30,7 +30,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindParam(':salt', $salt);
     $stmt->execute();
 
-    header("Location: main.php");
+    $stmt2 = $db->prepare("SELECT * FROM users WHERE username = :uname AND password = :hashed");
+    $stmt2->bindParam(':uname', $username);
+    $stmt2->bindParam(':hashed', $hashed_password);
+    $stmt2->execute();
+    $result2 = $stmt2->fetchAll();
+    $_SESSION["BID"] = $result2[0]["BID"];
+    $_SESSION["username"] = $result2[0]["username"];
+    echo "<script type='text/javascript'>location.href = './main.php';</script>";
     exit();
 }
 ?>
@@ -53,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <h3 class="text-center">Sign Up</h3>
                     </div>
                     <div class="card-body">
-                        <form id="signupForm" action="signup.php" method="POST">
+                        <form id="signupForm" action="" method="POST">
                             <div class="form-group">
                                 <label for="username">Username:</label>
                                 <input type="text" id="username" name="username" class="form-control" required>

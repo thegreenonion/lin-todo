@@ -34,7 +34,7 @@
     </style>
 </head>
 <body>
-    <h1 class="">
+    <h1>
         Willkommen bei der TODO-Applikation von
         <a style="color: red" href="https://github.com/thegreenonion">thegreenonion</a>
         ,
@@ -53,26 +53,27 @@
         $sql = $db->prepare("SELECT COUNT(*) FROM users");
         $sql->execute();
         $result = $sql->fetch();
+        $count = $result[0];
         echo "<div>";
-            if(!isset($_SESSION["username"]))
-            {
-                echo "<span style='color: red; float: right; font-weight: bold; margin-right: 20px;'>
-                Du bist noch nicht angemeldet!
-                </span>";
-                
-                echo "<span style='color: red; font-weight: bold; margin-left: 20px;'>
-                Bereits " . $result[0] . " Menschen benutzen TODO!</span>
-                <br>
-                <span style='color: red; font-weight: bold; margin-left: 20px;'>
-                Sei der nächste: 
-                <a href='./signup.php'>Registrieren!</a>
-                </span>";
-            }
-            else {
-                echo "<span style='color: green; float: right; margin-right: 20px;'>
-                Du bist angemeldet als <span style='color: blue'>" . $_SESSION['username'] . "</span>!
-                </span>";
-            }
+        if(!isset($_SESSION["username"]))
+        {
+            echo "<span style='color: red; float: right; font-weight: bold; margin-right: 20px;'>
+            Du bist noch nicht angemeldet!
+            </span>";
+            
+            echo "<span style='color: red; font-weight: bold; margin-left: 20px;'>
+            Bereits " . $count . " Menschen benutzen TODO!</span>
+            <br>
+            <span style='color: red; font-weight: bold; margin-left: 20px;'>
+            Sei der nächste: 
+            <a href='main.php?action=signup'>Registrieren!</a>
+            </span>";
+        }
+        else {
+            echo "<span style='color: green; float: right; margin-right: 20px;'>
+            Du bist angemeldet als <span style='color: blue'>" . $_SESSION['username'] . "</span>!
+            </span>";
+        }
         echo "</div>";
     ?>
     <?php
@@ -101,7 +102,7 @@
         <br>
         Kontakt via GitHub
         <br>
-        Benutzerzahl: <?php echo $result[0]; ?>
+        Benutzerzahl: <?php echo $count; ?>
     </p>
 </footer>
 </html>

@@ -31,14 +31,14 @@ function Login($pdo_db, $username, $password)
         die("Loginvorgang gescheitert: " . $e->getMessage());
     }
 
-    $result = $statement->fetch();
+    $result = $statement->fetchAll();
     var_dump($result);
 
     if(count($result) != 0)
     {
-        $_SESSION['username'] = $result['username'];
-        $_SESSION['BID'] = $result['BID'];
-        echo "<script type='text/javascript'>location.href = 'https://hmbldtw.spdns.org/~eulbert/web/gtodo/lin-todo/main.php';</script>";
+        $_SESSION['username'] = $result[0]['username'];
+        $_SESSION['BID'] = $result[0]['BID'];
+        echo "<script type='text/javascript'>location.href = './main.php';</script>";
         exit();
     }
     else
