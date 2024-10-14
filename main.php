@@ -29,32 +29,49 @@
     </style>
 </head>
 <body>
-    <h1>
-        Willkommen bei der TODO-Applikation von
-        <a style="color: red" href="https://github.com/thegreenonion">thegreenonion</a>
-        ,
-        <a style="color: purple" href="https://github.com/skeund89">skeund89</a>
-        und
-        <a style="color: orange" href="https://github.com/leg0batman">leg0batman</a>
-    </h1>
-    <br>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-auto">
-                <button onclick="window.location.href='main.php?action=login'" type="button" class="btn btn-primary btn-lg mb-2">Login</button>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">TODO-Applikation</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="main.php">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="main.php?action=login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="main.php?action=signup">Registrieren</a>
+                    </li>
+                    <?php
+                    if(isset($_SESSION["BID"])) {
+                        echo "
+                        <li class='nav-item'>
+                        <a class='nav-link' href='main.php?action=getlists'>Listen anzeigen</a>
+                        </li>
+                        ";
+                    }
+                    if(isset($_SESSION['BID']))
+                    {
+                        echo "<li class='nav-item'>";
+                        echo "<a class='nav-link' href='main.php?action=logout'>Logout</a>";
+                        echo "</li>";
+                    }
+                    ?>
+                </ul>
+                <span class="navbar-text">
+                    Willkommen bei der TODO-Applikation von
+                    <a style="color: red" href="https://github.com/thegreenonion">thegreenonion</a>,
+                    <a style="color: purple" href="https://github.com/skeund89">skeund89</a> und
+                    <a style="color: orange" href="https://github.com/leg0batman">leg0batman</a>
+                </span>
             </div>
-            <div class="col-auto">
-                <button onclick="window.location.href='main.php?action=signup'" type="button" class="btn btn-primary btn-lg mb-2">Registrieren</button>
-            </div>
-            <?php
-            if(isset($_SESSION['BID']))
-            {
-                $command = "window.location.href='main.php?action=getlists'";
-                echo "<div class='col-auto'><button onclick=\"$command\" type='button' class='btn btn-primary btn-lg mb-2'>Listen anzeigen</button></div>";
-            }
-            ?>
         </div>
-    </div>
+    </nav>
+    <br>
     <?php
         include("conn.php");
 
