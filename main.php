@@ -38,7 +38,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="main.php">Home</a>
+                        <a class="nav-link active" aria-current="page" href="main.php?action=dashboard">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="main.php?action=login">Login</a>
@@ -119,6 +119,10 @@
                 }
                 else if($_GET["action"] == "dashboard") {
                     include("dashboard.php");
+                }
+                else if($_GET["action"] == "getitems") {
+                    $_SESSION["lid"] = $_GET["lid"];
+                    include("getitems.php");
                 }
             }
             else {

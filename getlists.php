@@ -27,7 +27,11 @@
         echo "<table class='table table-bordered'>";
         echo "<thead class='thead-dark'><tr><th>Name</th><th>Anzahl Aufgaben</th><th>Davon unerledigt</th></tr></thead>";
         echo "<tbody>";
-        echo "<tr><td>" . htmlspecialchars($row['name']) . "</td><td>$count</td><td>$ocount</td></tr>";
+        echo "<tr>
+        <td>
+            <a href='main.php?action=getitems&lid=$row[LID]'>$row[name]</a>
+        </td>
+        <td>$count</td><td>$ocount</td></tr>";
         echo "</tbody>";
         echo "</table>";
         echo "</div>";
