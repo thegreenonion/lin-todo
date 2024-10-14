@@ -41,10 +41,10 @@ function Login($pdo_db, $username, $password)
     $salt = $fetched_statement['salt'];
     
     $pepper = 'yoxxxxxxx45hghjkj';
-    $bool_password = verifyPassword($password, $db_password, $salt, $pepper);
+    $verification_result = verifyPassword($password, $db_password, $salt, $pepper);
 
     // compare database password with freshly hashed password
-    if ($bool_password == FALSE)
+    if ($verification_result['hashesMatch'] == FALSE)
     {
         echo "Die Eingabe war falsch. Bitte versuche es normal.";
         exit();
@@ -54,7 +54,7 @@ function Login($pdo_db, $username, $password)
     try
     {
         $statement = $pdo_db->prepare("SELECT username, BID FROM users WHERE username =? AND password=?");
-        $statement->execute([$username, $hashed_password]);
+        $statement->execute([$username, $verification_result['hashed_password']]);
     }
     catch(Exception $e)
     {
@@ -62,8 +62,6 @@ function Login($pdo_db, $username, $password)
     }
 
     $result = $statement->fetch();
-    var_dump($result);
-
     // set session variables and redirect to dashboard if result of query is not 0
     if(count($result) != 0)
     {
