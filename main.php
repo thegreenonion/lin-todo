@@ -114,6 +114,9 @@
                 else if($_GET["action"] == "getlists") {
                     include("getlists.php");
                 }
+                else if($_GET["action"] == "logout") {
+                    include("logout.php");
+                }
             }
             else {
                 echo "<div style='text-align: center'>";

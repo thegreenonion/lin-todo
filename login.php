@@ -18,7 +18,6 @@ function Login($pdo_db, $username, $password)
     }
 
     $result = $statement->fetchAll();
-    var_dump($result);
 
     if(count($result) != 0)
     {
