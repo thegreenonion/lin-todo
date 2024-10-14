@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 function Connect()
 {
     $datenbank = "eulbert_gtodo";
@@ -67,14 +65,15 @@ function Login($pdo_db, $username, $password)
         die("Loginvorgang gescheitert: " . $e->getMessage());
     }
 
-    $result = $statement->fetchAll();
+    $result = $statement->fetch();
+    var_dump($result);
 
     // set session variables and redirect to dashboard if result of query is not 0
     if(count($result) != 0)
     {
-        $_SESSION['username'] = $result[0]['username'];
-        $_SESSION['BID'] = $result[0]['BID'];
-        echo "<script type='text/javascript'>location.href = 'https://hmbldtw.spdns.org/~hwalde/web/g_todo_project/lin-todo/dashboard.php';</script>";
+        $_SESSION['username'] = $result['username'];
+        $_SESSION['BID'] = $result['BID'];
+        echo "<script type='text/javascript'>location.href = 'https://hmbldtw.spdns.org/~eulbert/web/gtodo/lin-todo/main.php';</script>";
         exit();
     }
     else
