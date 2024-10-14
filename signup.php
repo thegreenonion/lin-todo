@@ -1,5 +1,5 @@
 <?php
-start_session();
+session_start();
 $datenbank = "eulbert_gtodo";
 $host = "localhost";
 $user = "hwalde";
@@ -26,16 +26,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $hashed_password = password_hash($peppered_password . $salt, PASSWORD_BCRYPT);
 
     // Gekochtes Passwort und Username der Datenbank speichern
-    $stmt = $db->prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
+    $stmt = $db->prepare("INSERT INTO users (username, password, salt) VALUES (:username, :password, :salt)");
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':password', $hashed_password);
+    $stmt->bindParam(':salt', $salt);
     $stmt->execute();
 
     header("Location: main.php");
     exit();
 }
 ?>
-
+<!--Login Form-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,12 +72,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    
-<!-- Prüfen Ob Passwort mindestens 8 Zeichen lang ist und mindestens eine Zahl und ein Buchstabe enthält -->
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <script>
         document.getElementById('signupForm').addEventListener('submit', function(event) {
             const password = document.getElementById('password').value;
-            const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; 
+            const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; //8 zeichen 1 bucstabe 1 zahl
+
             if (!regex.test(password)) {
                 alert('Password must be at least 8 characters long and contain at least one letter and one number.');
                 event.preventDefault();
