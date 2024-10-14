@@ -1,3 +1,5 @@
+<?php session_start();?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +8,6 @@
     <title>Dashboard</title>
 </head>
 <body>
-    
+    <h1>Hallo, <?php echo $_SESSION['username'];?></h1>
 </body>
 </html>
