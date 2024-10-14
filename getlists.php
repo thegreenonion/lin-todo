@@ -11,21 +11,10 @@ session_start();
 </head>
 <body>
     <?php
-        $datenbank = "eulbert_gtodo";
-        $host = "localhost";
-        $user = "eulbert";
-        $passwd = "noh8Ailaey";
-        try 
-        {
-            $db = new PDO("mysql:dbname=$datenbank;host=$host", $user, $passwd);
-            $db -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch(PDOException $e) 
-        {
-            die("Datenbankverbindung gescheitert: " . $e->getMessage());
-        }
-
+        include "conn.php";
         $username = $_SESSION["username"];
     ?>
     <h1 class="text-center">Listen von <?php echo "<span style='color: blue;'>$username</span>"; ?></h1>
+    
 </body>
 </html>
