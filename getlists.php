@@ -11,10 +11,17 @@ session_start();
 </head>
 <body>
     <?php
-        include "conn.php";
+        include("conn.php");
         $username = $_SESSION["username"];
     ?>
     <h1 class="text-center">Listen von <?php echo "<span style='color: blue;'>$username</span>"; ?></h1>
+    <?php
+    $uid = $_SESSION["bid"];
+    $sql = "SELECT * FROM lists WHERE lBID = $uid";
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetchAll();
     
+    ?>
 </body>
 </html>

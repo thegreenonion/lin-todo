@@ -44,29 +44,11 @@
     </h1>
     <br>
     <div class="d-flex justify-content-center">
-        <button onclick="window.location.href='login.php'" type="button" class="btn btn-primary btn-lg">Login</button>
-        <button onclick="window.location.href='signup.php'" type="button" class="btn btn-primary btn-lg">Registrieren</button>
-        <?php
-        if(isset($_SESSION['BID']))
-        {
-            $command = "window.location.href='logout.php'";
-            echo "<button onclick=\"$command\" type='button' class='btn btn-primary btn-lg'>Abmelden</button>";
-        }
-        ?>
+        <button onclick="window.location.href='main.php?action=login'" type="button" class="btn btn-primary btn-lg">Login</button>
+        <button onclick="window.location.href='main.php?action=signup'" type="button" class="btn btn-primary btn-lg">Registrieren</button>
     </div>
     <?php
-        $datenbank = "eulbert_gtodo";
-        $host = "localhost";
-        $user = "eulbert";
-        $passwd = "noh8Ailaey";
-        try 
-        {
-            $db = new PDO("mysql:dbname=$datenbank;host=$host", $user, $passwd);
-            $db -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch(PDOException $e) 
-        {
-            die("Datenbankverbindung gescheitert: " . $e->getMessage());
-        }
+        include("conn.php");
 
         $sql = $db->prepare("SELECT COUNT(*) FROM users");
         $sql->execute();
@@ -92,6 +74,17 @@
                 </span>";
             }
         echo "</div>";
+    ?>
+    <?php
+        if(isset($_GET["action"]))
+        {
+            if($_GET["action"] == "login") {
+                include("login.php");
+            }
+            else if($_GET["action"] == "signup") {
+                include("signup.php");
+            }
+        }
     ?>
     <div class="d-flex justify-content-center">
         <?php

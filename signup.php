@@ -1,5 +1,4 @@
 <?php
-session_start();
 $datenbank = "eulbert_gtodo";
 $host = "localhost";
 $user = "hwalde";

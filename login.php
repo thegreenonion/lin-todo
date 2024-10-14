@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 function Connect()
 {
     $datenbank = "eulbert_gtodo";
@@ -40,7 +38,7 @@ function Login($pdo_db, $username, $password)
     {
         $_SESSION['username'] = $result['username'];
         $_SESSION['BID'] = $result['BID'];
-        echo "<script type='text/javascript'>location.href = 'https://hmbldtw.spdns.org/~hwalde/web/g_todo_project/lin-todo/dashboard.php';</script>";
+        echo "<script type='text/javascript'>location.href = 'https://hmbldtw.spdns.org/~eulbert/web/gtodo/lin-todo/main.php';</script>";
         exit();
     }
     else
