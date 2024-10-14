@@ -20,13 +20,47 @@ function Connect()
 
     return $db;
 }
+function hash_password($password, $salt, $pepper)
+{
+    $peppered_password = hash_hmac("sha256", $password, $pepper);
+    $hashed_password = password_hash($peppered_password . $salt, PASSWORD_BCRYPT);
+
+    return $hashed_password;
+}
 
 function Login($pdo_db, $username, $password)
 {
+    // request hashed password from database
+    try
+    {
+        $statement = $pdo_db->prepare("SELECT username, password, salt FROM users WHERE username =?");
+        $statement->execute([$username]);
+    }
+    catch(Exception $e)
+    {
+        die("Loginvorgang gescheitert: " . $e->getMessage());
+    }
+    
+    // fetch database password + salt and hash password of form with salt and pepper 
+    $fetched_statement = $statement->fetch();
+    $db_password = $fetched_statement['password'];
+    $salt = $fetched_statement['salt'];
+    
+    $pepper = 'yoxxxxxxx45hghjkj';
+    $hashed_password = hash_password($password, $salt, $pepper);
+
+    // compare database password with freshly hashed password
+    if ($db_password != $hashed_password)
+    {
+        echo "Die Eingabe war falsch. Bitte versuche es normal.";
+        exit();
+    }
+
+    // request username and BID with hashed password
     try
     {
         $statement = $pdo_db->prepare("SELECT username, BID FROM users WHERE username =? AND password=?");
-        $statement->execute([$username, $password]);
+        $statement->execute([$username, $hashed_password]);
     }
     catch(Exception $e)
     {
@@ -35,6 +69,7 @@ function Login($pdo_db, $username, $password)
 
     $result = $statement->fetchAll();
 
+    // set session variables and redirect to dashboard if result of query is not 0
     if(count($result) != 0)
     {
         $_SESSION['username'] = $result[0]['username'];
