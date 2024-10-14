@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Salten und peppern (Kochen) ans Passwort ranhängen das passwort hashen
     $salt = bin2hex(random_bytes(22));
-    $peppered_password = hash_hmac("sha256", $password, $pepper);
+    $peppered_password = hash_hmac("sha256", $password, $pepper); // sha256 ist ein hashing algorithmus mit 256 bit
     $hashed_password = password_hash($peppered_password . $salt, PASSWORD_BCRYPT);
 
     // Gekochtes Passwort und Username der Datenbank speichern
