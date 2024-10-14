@@ -23,11 +23,6 @@
             color: black;
             text-align: center;
         }
-        button {
-            display: block;
-            margin: 20px;
-            width: 210px;
-        }
         .inline-paragraph {
             display: inline;
         }
@@ -43,9 +38,22 @@
         <a style="color: orange" href="https://github.com/leg0batman">leg0batman</a>
     </h1>
     <br>
-    <div class="d-flex justify-content-center">
-        <button onclick="window.location.href='main.php?action=login'" type="button" class="btn btn-primary btn-lg">Login</button>
-        <button onclick="window.location.href='main.php?action=signup'" type="button" class="btn btn-primary btn-lg">Registrieren</button>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <button onclick="window.location.href='main.php?action=login'" type="button" class="btn btn-primary btn-lg mb-2">Login</button>
+            </div>
+            <div class="col-auto">
+                <button onclick="window.location.href='main.php?action=signup'" type="button" class="btn btn-primary btn-lg mb-2">Registrieren</button>
+            </div>
+            <?php
+            if(isset($_SESSION['BID']))
+            {
+                $command = "window.location.href='main.php?action=getlists'";
+                echo "<div class='col-auto'><button onclick=\"$command\" type='button' class='btn btn-primary btn-lg mb-2'>Listen anzeigen</button></div>";
+            }
+            ?>
+        </div>
     </div>
     <?php
         include("conn.php");
@@ -76,23 +84,19 @@
         }
         echo "</div>";
     ?>
-    <?php
-        if(isset($_GET["action"]))
-        {
-            if($_GET["action"] == "login") {
-                include("login.php");
-            }
-            else if($_GET["action"] == "signup") {
-                include("signup.php");
-            }
-        }
-    ?>
-    <div class="d-flex justify-content-center">
+    <div style="border: 2px solid black; padding: 10px; margin: 20px;">
         <?php
-        if(isset($_SESSION['BID']))
-        {
-            $command = "window.location.href='getlists.php'";
-            echo "<button onclick=\"$command\" type='button' class='btn btn-primary btn-lg'>Listen anzeigen</button>";
+            if(isset($_GET["action"]))
+            {
+                if($_GET["action"] == "login") {
+                    include("login.php");
+                }
+                else if($_GET["action"] == "signup") {
+                    include("signup.php");
+                }
+                else if($_GET["action"] == "getlists") {
+                    include("getlists.php");
+                }
             }
         ?>
     </div>

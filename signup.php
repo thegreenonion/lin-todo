@@ -56,10 +56,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header bg-dark text-white">
                         <h3 class="text-center">Sign Up</h3>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body bg-light">
                         <form id="signupForm" action="" method="POST">
                             <div class="form-group">
                                 <label for="username">Username:</label>

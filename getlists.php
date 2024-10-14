@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,18 +7,27 @@ session_start();
     <title>Listen von Benutzer</title>
 </head>
 <body>
+    <h1 class="text-center">Listen von <?php echo "<span style='color: blue;'>$_SESSION[username]</span>"; ?></h1>
     <?php
-        include("conn.php");
-        $username = $_SESSION["username"];
-    ?>
-    <h1 class="text-center">Listen von <?php echo "<span style='color: blue;'>$username</span>"; ?></h1>
-    <?php
-    $uid = $_SESSION["bid"];
-    $sql = "SELECT * FROM lists WHERE lBID = $uid";
+    include("conn.php");
+    $uid = $_SESSION["BID"];
+    $sql = "SELECT * FROM lists WHERE lBID = ?";
     $stmt = $db->prepare($sql);
-    $stmt->execute();
+    $stmt->execute([$uid]);
     $result = $stmt->fetchAll();
-    
+    foreach($result as $row)
+    {
+        echo "<div class='container mt-5'>";
+        echo "<table class='table table-bordered'>";
+        echo "<thead class='thead-dark'><tr><th>Name</th></tr></thead>";
+        echo "<tbody>";
+        foreach($result as $row) {
+            echo "<tr><td>" . htmlspecialchars($row['name']) . "</td></tr>";
+        }
+        echo "</tbody>";
+        echo "</table>";
+        echo "</div>";
+    }
     ?>
 </body>
 </html>
