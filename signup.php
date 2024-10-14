@@ -19,6 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
 
     // Hashe das Passwort und den Salt
+    $pepper = 'yoxxxxxxx45hghjkj';
+    
     $hashed_data = hashPassword($password, $pepper);
     $hashed_password = $hashed_data['hash'];
     $salt = $hashed_data['salt'];
