@@ -1,5 +1,3 @@
-<?php session_start();?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +6,7 @@
     <title>Dashboard</title>
 </head>
 <body>
-    <h1>Hallo, <?php echo $_SESSION['username'];?></h1>
+    <h1>Hallo, <?php echo $_SESSION['username'];?>!</h1>
+    <p style="text-align: center">Es ist <?php echo date("H:i") ?> Uhr.</p>
 </body>
 </html>

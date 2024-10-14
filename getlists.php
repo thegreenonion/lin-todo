@@ -20,11 +20,14 @@
         $stmt = $db->prepare("SELECT COUNT(*) FROM items WHERE iLID = ?");
         $stmt->execute([$row['LID']]);
         $count = $stmt->fetch()[0];
+        $stmt = $db->prepare("SELECT COUNT(*) FROM items WHERE iLID = ? AND is_done = 0");
+        $stmt->execute([$row['LID']]);
+        $ocount = $stmt->fetch()[0];
         echo "<div class='container mt-5'>";
         echo "<table class='table table-bordered'>";
-        echo "<thead class='thead-dark'><tr><th>Name</th><th>Anzahl Aufgaben</th></tr></thead>";
+        echo "<thead class='thead-dark'><tr><th>Name</th><th>Anzahl Aufgaben</th><th>Davon unerledigt</th></tr></thead>";
         echo "<tbody>";
-        echo "<tr><td>" . htmlspecialchars($row['name']) . "</td><td>$count</td></tr>";
+        echo "<tr><td>" . htmlspecialchars($row['name']) . "</td><td>$count</td><td>$ocount</td></tr>";
         echo "</tbody>";
         echo "</table>";
         echo "</div>";

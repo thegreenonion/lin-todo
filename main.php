@@ -92,12 +92,12 @@
             <span style='color: red; font-weight: bold; margin-left: 20px;'>
             Sei der nächste: 
             <a href='main.php?action=signup'>Registrieren!</a>
-            </span>";
+            </span><br><br>";
         }
         else {
             echo "<span style='color: green; float: right; margin-right: 20px;'>
             Du bist angemeldet als <span style='color: blue'>" . $_SESSION['username'] . "</span>!
-            </span>";
+            </span><br><br>";
         }
         echo "</div>";
     ?>
@@ -117,6 +117,9 @@
                 else if($_GET["action"] == "logout") {
                     include("logout.php");
                 }
+                else if($_GET["action"] == "dashboard") {
+                    include("dashboard.php");
+                }
             }
             else {
                 echo "<div style='text-align: center'>";
@@ -127,11 +130,12 @@
     </div>
 </body>
 <footer>
-    <p>© 2024 thegreenonion, skeund89, leg0batman
+    <span>© 2024 thegreenonion, skeund89, leg0batman
         <br>
         Kontakt via GitHub
         <br>
         Benutzerzahl: <?php echo $count; ?>
-    </p>
+    </span>
+    <p></p>
 </footer>
 </html>
