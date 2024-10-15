@@ -15,6 +15,10 @@
     $stmt = $db->prepare($sql);
     $stmt->execute([$uid]);
     $result = $stmt->fetchAll();
+    echo "<div class='container mt-5'>";
+    echo "<table class='table table-bordered'>";
+    echo "<thead class='thead-dark'><tr><th>Name</th><th>Anzahl Aufgaben</th><th>Davon unerledigt</th></tr></thead>";
+    echo "<tbody>";
     foreach($result as $row)
     {
         $stmt = $db->prepare("SELECT COUNT(*) FROM items WHERE iLID = ?");
@@ -23,10 +27,6 @@
         $stmt = $db->prepare("SELECT COUNT(*) FROM items WHERE iLID = ? AND is_done = 0");
         $stmt->execute([$row['LID']]);
         $ocount = $stmt->fetch()[0];
-        echo "<div class='container mt-5'>";
-        echo "<table class='table table-bordered'>";
-        echo "<thead class='thead-dark'><tr><th>Name</th><th>Anzahl Aufgaben</th><th>Davon unerledigt</th></tr></thead>";
-        echo "<tbody>";
         echo "<tr>
         <td>
             <a href='main.php?action=getitems&lid=$row[LID]'>$row[name]</a>
@@ -36,10 +36,10 @@
             <span style='color: red'>$ocount</span>
         </td>
         </tr>";
-        echo "</tbody>";
-        echo "</table>";
-        echo "</div>";
     }
+    echo "</tbody>";
+    echo "</table>";
+    echo "</div>";
     ?>
 </body>
 </html>
