@@ -14,10 +14,11 @@ try
     die("Datenbankverbindung gescheitert: " . $e->getMessage());
 }
 
+function process_form(): bool {
+    global $db, $pepper;
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $username = $_POST['username'];
-  $password = $_POST['password'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
   // Define the hashPassword function
   function hashPassword($password, $pepper) {
