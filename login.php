@@ -22,7 +22,11 @@ function Login($pdo_db, $username, $password)
     
     // fetch database password + salt and hash password of form with salt and pepper 
     $fetched_statement = $statement->fetch();
-    
+    if(!$fetched_statement)
+    {
+        echo "Die Eingabe war falsch. Bitte versuche es normal.";
+        exit();
+    }
     $db_password = $fetched_statement['password'];
     $salt = $fetched_statement['salt'];
     
