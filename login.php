@@ -1,4 +1,6 @@
 <?php
+include 'Hash.php';
+
 function Connect()
 {
     include("conn.php");
@@ -7,18 +9,46 @@ function Connect()
 
 function Login($pdo_db, $username, $password)
 {
+    // request hashed password from database
+    try
+    {
+        $statement = $pdo_db->prepare("SELECT username, password, salt FROM users WHERE username =?");
+        $statement->execute([$username]);
+    }
+    catch(Exception $e)
+    {
+        die("Loginvorgang gescheitert: " . $e->getMessage());
+    }
+    
+    // fetch database password + salt and hash password of form with salt and pepper 
+    $fetched_statement = $statement->fetch();
+    
+    $db_password = $fetched_statement['password'];
+    $salt = $fetched_statement['salt'];
+    
+    $pepper = 'yoxxxxxxx45hghjkj';
+    $verification_result = verifyPassword($password, $db_password, $salt, $pepper);
+
+    // compare database password with freshly hashed password
+    if ($verification_result['hashesMatch'] == FALSE)
+    {
+        echo "Die Eingabe war falsch. Bitte versuche es normal.";
+        exit();
+    }
+
+    // request username and BID with hashed password
     try
     {
         $statement = $pdo_db->prepare("SELECT username, BID FROM users WHERE username =? AND password=?");
-        $statement->execute([$username, $password]);
+        $statement->execute([$username, $verification_result['hashed_password']]);
     }
     catch(Exception $e)
     {
         die("Loginvorgang gescheitert: " . $e->getMessage());
     }
 
-    $result = $statement->fetchAll();
-
+    $result = $statement->fetch();
+    // set session variables and redirect to dashboard if result of query is not 0
     if(count($result) != 0)
     {
         $_SESSION['username'] = $result[0]['username'];
