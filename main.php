@@ -124,6 +124,14 @@
                     $_SESSION["lid"] = $_GET["lid"];
                     include("getitems.php");
                 }
+                else if($_GET["action"] == "edititem") {
+                    $_SESSION["IID"] = $_GET["iid"];
+                    include("./control/edititem.php");
+                }
+                else if($_GET["action"] == "deleteitem") {
+                    $_SESSION["IID"] = $_GET["iid"];
+                    include("./control/deleteitem.php");
+                }
             }
             else {
                 echo "<div style='text-align: center'>";
