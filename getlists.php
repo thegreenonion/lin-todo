@@ -31,7 +31,11 @@
         <td>
             <a href='main.php?action=getitems&lid=$row[LID]'>$row[name]</a>
         </td>
-        <td>$count</td><td>$ocount</td></tr>";
+        <td>$count</td>
+        <td>
+            <span style='color: red'>$ocount</span>
+        </td>
+        </tr>";
         echo "</tbody>";
         echo "</table>";
         echo "</div>";

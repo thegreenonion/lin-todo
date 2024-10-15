@@ -33,6 +33,8 @@
         Darin enthalten sind <span><?php echo $y; ?></span> Aufgabe(n).
         <br>
         Davon sind <span style="color: red"><?php echo $x; ?></span> noch nicht erledigt.
+        <br>
+        <a href="main.php?action=getlists">Zur Übersicht</a>
     </p>
     <p></p>
 </body>
