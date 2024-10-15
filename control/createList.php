@@ -1,6 +1,8 @@
 <?php 
 session_start();
 
+$BID = $_SESSION['BID'];
+
 function create_list($BID, String $title)
 {
     // create connection to database
@@ -28,8 +30,17 @@ function create_list($BID, String $title)
     <title>Listenerstellung</title>
 </head>
 <body>
+    <h1>Hallo <?php echo $_SESSION['BID']; echo $_SESSION['username'];?></h1>
     <h1>Erstellen einer Liste</h1>
 
+    <?php
+    if(isset($_POST['title']))
+        {
+            $list_title = $_POST['title'];
+            
+            create_list($BID, $list_title);
+        }
+    ?>
     <form methode='post'>
         <input type="text" name="title">
         <input type="submit" value="Erstellen">
