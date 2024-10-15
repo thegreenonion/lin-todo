@@ -16,7 +16,7 @@ try {
 
 function process_form(): bool {
     global $db, $pepper;
-
+    $pepper = 'yoxxxxxxx45hghjkj';
     $username = $_POST['username'];
     $password = $_POST['password'];
 
