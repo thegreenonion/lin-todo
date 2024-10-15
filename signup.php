@@ -6,6 +6,9 @@ $host = "localhost";
 $user = "hwalde";
 $passwd = "UG2aepai4g";
 
+// Define the pepper for password hashing
+$pepper = 'your_pepper_string';
+
 // Datenbankverbindung herstellen
 try {
     $db = new PDO("mysql:dbname=$datenbank;host=$host", $user, $passwd);
