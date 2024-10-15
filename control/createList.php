@@ -19,3 +19,21 @@ function create_list($BID, String $title)
     }
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listenerstellung</title>
+</head>
+<body>
+    <h1>Erstellen einer Liste</h1>
+
+    <form methode='post'>
+        <input type="text" name="title">
+        <input type="submit" value="Erstellen">
+    </form>
+
+</body>
+</html>
