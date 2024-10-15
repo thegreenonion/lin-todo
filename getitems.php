@@ -30,6 +30,7 @@
         echo '<td>' . htmlspecialchars($row['content']) . '</td>';
         echo '<td>' . htmlspecialchars($row['due']) . '</td>';
         echo '<td>' . ($row['is_done'] ? 'Erledigt' : 'Nicht erledigt') . '</td>';
+        echo "<td><button class='btn btn-success'>Erledigt</button></td>";
         echo '</tr>';
         echo '</tbody>';
     }
