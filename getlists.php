@@ -10,14 +10,10 @@
     <h1 class="text-center">Listen von <?php echo "<span style='color: blue;'>$_SESSION[username]</span>"; ?></h1>
     <?php
     include("conn.php");
-    $uid = $_SESSION["BID"];
-    $sql = "SELECT * FROM lists WHERE lBID = ?";
-    $stmt = $db->prepare($sql);
-    $stmt->execute([$uid]);
-    $result = $stmt->fetchAll();
+    include("./control/getListsByID.php");
     echo "<div class='container mt-5'>";
     echo "<table class='table table-bordered'>";
-    echo "<thead class='thead-dark'><tr><th>Name</th><th>Anzahl Aufgaben</th><th>Davon unerledigt</th></tr></thead>";
+    echo "<thead class='thead-dark'><tr><th>Name</th><th>Anzahl Aufgaben</th><th>Davon unerledigt</th><th>Löschen</th></tr></thead>";
     echo "<tbody>";
     foreach($result as $row)
     {
@@ -27,6 +23,7 @@
         $stmt = $db->prepare("SELECT COUNT(*) FROM items WHERE iLID = ? AND is_done = 0");
         $stmt->execute([$row['LID']]);
         $ocount = $stmt->fetch()[0];
+        $cmd = "window.location.href='main.php?action=deletelist&lid=" . $row["LID"] . "'";
         echo "<tr>
         <td>
             <a href='main.php?action=getitems&lid=$row[LID]'>$row[name]</a>
@@ -34,6 +31,9 @@
         <td>$count</td>
         <td>
             <span style='color: red'>$ocount</span>
+        </td>
+        <td>
+            <button onclick=$cmd class='btn btn-danger'>Löschen</button>
         </td>
         </tr>";
     }
