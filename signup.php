@@ -45,7 +45,12 @@ function process_form(): bool {
   } else {
     echo "Error: " . $stmt->error;
   }
+  return false;
+}
 
+if($_SERVER["REQUEST_METHOD"]== "POST")
+{
+  process_form();
 }
 
 
@@ -62,7 +67,7 @@ function process_form(): bool {
 <body>
 <div class="container">
   <h2>Signup</h2>
-  <form method="post" action="signup.php">
+  <form method="post" action="">
     <div class="form-group">
       <label for="username">Username:</label>
       <input type="text" class="form-control" id="username" name="username" required>

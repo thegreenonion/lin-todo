@@ -59,6 +59,9 @@
                         <a class='nav-link' href='main.php?action=getlists'>Listen anzeigen</a>
                         </li>
                         ";
+                        echo "<li class='nav-item'>";
+                        echo "<a class='nav-link' href='main.php?action=newitem'>Neue Aufgabe</a>";
+                        echo "</li>";
                     }
                     if(isset($_SESSION['BID']))
                     {
@@ -81,13 +84,13 @@
     <?php
         include("conn.php");
 
-        $sql = $db->prepare("SELECT COUNT(*) FROM users");
+        $sql = $db->prepare("SELECT COUNT(*) as count FROM users");
         $sql->execute();
         $result = $sql->fetch();
-        $count = $result[0];
-        echo "<div>";
+        $count = $result['count'];
         if(!isset($_SESSION["username"]))
         {
+            echo "<div>";
             echo "<span style='color: red; float: right; font-weight: bold; margin-right: 20px;'>
             Du bist noch nicht angemeldet!
             </span>";
@@ -99,13 +102,15 @@
             Sei der nächste: 
             <a href='main.php?action=signup'>Registrieren!</a>
             </span><br><br>";
+            echo "</div>";
         }
         else {
+            echo "<div>";
             echo "<span style='color: green; float: right; margin-right: 20px;'>
             Du bist angemeldet als <span style='color: blue'>" . $_SESSION['username'] . "</span>!
             </span><br><br>";
+            echo "</div>";
         }
-        echo "</div>";
     ?>
     <div style="border: 2px solid black; padding: 10px; margin: 20px;">
         <?php
@@ -142,6 +147,9 @@
                     $_SESSION["lid"] = $_GET["lid"];
                     include("./control/deletelist.php");
                 }
+                else if($_GET["action"] == "newitem") {
+                    include("./newitem.php");
+                }
             }
             else {
                 echo "<div style='text-align: center'>";
@@ -156,6 +164,14 @@
         <br>
         Kontakt via GitHub
         <br>
+        <?php
+        include("conn.php");
+
+        $sql = $db->prepare("SELECT COUNT(*) as count FROM users");
+        $sql->execute();
+        $result = $sql->fetch();
+        $count = $result['count'];
+        ?>
         Benutzerzahl: <?php echo $count; ?>
     </span>
     <p></p>
