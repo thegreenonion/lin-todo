@@ -51,7 +51,7 @@ function Login($pdo_db, $username, $password)
         die("Loginvorgang gescheitert: " . $e->getMessage());
     }
 
-    $result = $statement->fetch();
+    $result = $statement->fetchAll();
     // set session variables and redirect to dashboard if result of query is not 0
     if(count($result) != 0)
     {
