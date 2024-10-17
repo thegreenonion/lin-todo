@@ -135,8 +135,17 @@
                     include("dashboard.php");
                 }
                 else if($_GET["action"] == "getitems") {
-                    $_SESSION["lid"] = $_GET["lid"];
-                    include("getitems.php");
+                    $lid = $_GET["lid"];
+                    $stmt = $db->prepare("SELECT * FROM lists WHERE LID = ? AND lBID = ?");
+                    $stmt->execute([$lid, $_SESSION["BID"]]);
+                    $result = $stmt->fetchAll();
+                    if(count($result) != 0) {
+                        $_SESSION["lid"] = $_GET["lid"];
+                        include("getitems.php");
+                    }
+                    else {
+                        return;
+                    }
                 }
                 else if($_GET["action"] == "edititem") {
                     $_SESSION["IID"] = $_GET["iid"];
