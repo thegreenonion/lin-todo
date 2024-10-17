@@ -1,24 +1,25 @@
 <?php 
 session_start();
 
-$BID = $_SESSION['BID'];
-
 function create_list($BID, String $title)
 {
     // create connection to database
-    include('conn.php');
+    include("../conn.php");
 
     // send creation query of list to database    
     try
     {
-        $sql = "INSERT INTO INSERT INTO `lists` (`LID`, `name`, `lBID`) VALUES (?, ?, ?);";
+        // INSERT INTO `lists` (`LID`, `name`, `lBID`) VALUES (NULL, 'listexample2', '54');
+        $sql = "INSERT INTO `lists` (`name`, `lBID`) VALUES (?, ?);";
         $statement = $db->prepare($sql);
-        $statement->execute([NULL, $title, $BID]);
+        $statement->execute([$title, $BID]);
     }
     catch(Exception $e)
     {
         die("Loginvorgang gescheitert: " . $e->getMessage());
     }
+
+    echo "Liste erstellt.";
 }
 ?>
 
@@ -37,11 +38,12 @@ function create_list($BID, String $title)
     if(isset($_POST['title']))
         {
             $list_title = $_POST['title'];
-            
+            $BID = $_SESSION['BID'];
+
             create_list($BID, $list_title);
         }
     ?>
-    <form methode='post'>
+    <form method='post' action="">
         <input type="text" name="title">
         <input type="submit" value="Erstellen">
     </form>
