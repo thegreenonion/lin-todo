@@ -1,4 +1,6 @@
 <?php
+
+
 $datenbank = "eulbert_gtodo";
 $host = "localhost";
 $user = "hwalde";
@@ -26,17 +28,24 @@ function process_form(): bool {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-  // Hash the password
-  $pepper = "yoxxxxxxx45hghjkj"; // Define your pepper string
-  $hashed_password_data = hashPassword($password, $pepper);
-  $hashed_password = $hashed_password_data['hash'];
-  $salt = $hashed_password_data['salt'];
+    // Define the hashPassword function
+    function hashPassword($password, $pepper) {
+        $salt = bin2hex(random_bytes(16));
+        $hashed_password = hash('sha256', $salt . $password . $pepper);
+        return ['hash' => $hashed_password, 'salt' => $salt];
+    }
 
-  // Prepare and bind
-  $stmt = $db->prepare("INSERT INTO users (username, password, salt) VALUES (?, ?, ?)");
-  $stmt->bindParam(1, $username);
-  $stmt->bindParam(2, $hashed_password);
-  $stmt->bindParam(3, $salt);
+    // Hash the password
+    $pepper = "your_pepper_string"; // Define your pepper string
+    $hashed_password_data = hashPassword($password, $pepper);
+    $hashed_password = $hashed_password_data['hash'];
+    $salt = $hashed_password_data['salt'];
+
+    // Prepare and bind
+    $stmt = $db->prepare("INSERT INTO users (username, password, salt) VALUES (?, ?, ?)");
+    $stmt->bindParam(1, $username);
+    $stmt->bindParam(2, $hashed_password);
+    $stmt->bindParam(3, $salt);
 
   // Execute the statement
   if ($stmt->execute()) {
@@ -44,12 +53,7 @@ function process_form(): bool {
   } else {
     echo "Error: " . $stmt->error;
   }
-  return false;
-}
 
-if($_SERVER["REQUEST_METHOD"]== "POST")
-{
-  process_form();
 }
 
 
