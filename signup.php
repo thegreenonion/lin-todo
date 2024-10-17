@@ -14,21 +14,20 @@ try
     die("Datenbankverbindung gescheitert: " . $e->getMessage());
 }
 
+function hashPassword($password, $pepper) {
+    $salt = bin2hex(random_bytes(16));
+    $hashed_password = hash('sha256', $salt . $password . $pepper);
+    return ['hash' => $hashed_password, 'salt' => $salt];
+}
+
 function process_form(): bool {
     global $db, $pepper;
 
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-  // Define the hashPassword function
-  function hashPassword($password, $pepper) {
-    $salt = bin2hex(random_bytes(16));
-    $hashed_password = hash('sha256', $salt . $password . $pepper);
-    return ['hash' => $hashed_password, 'salt' => $salt];
-  }
-
   // Hash the password
-  $pepper = "your_pepper_string"; // Define your pepper string
+  $pepper = "yoxxxxxxx45hghjkj"; // Define your pepper string
   $hashed_password_data = hashPassword($password, $pepper);
   $hashed_password = $hashed_password_data['hash'];
   $salt = $hashed_password_data['salt'];
