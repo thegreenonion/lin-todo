@@ -1,5 +1,4 @@
-<?php 
-session_start();
+<?php
 
 function create_list($BID, String $title)
 {
@@ -22,14 +21,7 @@ function create_list($BID, String $title)
     echo "Liste erstellt.";
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listenerstellung</title>
-</head>
+<html>
 <body>
     <h1>Hallo <?php echo $_SESSION['BID']; echo $_SESSION['username'];?></h1>
     <h1>Erstellen einer Liste</h1>

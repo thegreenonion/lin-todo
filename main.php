@@ -153,6 +153,9 @@
                 else if($_GET["action"] == "newitem") {
                     include("./newitem.php");
                 }
+                else if($_GET["action"] == "newlist") {
+                    include("control/createList.php");
+                }
             }
             else {
                 echo "<div style='text-align: center'>";
