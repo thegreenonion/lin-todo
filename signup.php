@@ -1,4 +1,6 @@
 <?php
+
+
 $datenbank = "eulbert_gtodo";
 $host = "localhost";
 $user = "hwalde";
@@ -20,35 +22,42 @@ function process_form(): bool {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-  // Define the hashPassword function
-  function hashPassword($password, $pepper) {
-    $salt = bin2hex(random_bytes(16));
-    $hashed_password = hash('sha256', $salt . $password . $pepper);
-    return ['hash' => $hashed_password, 'salt' => $salt];
-  }
+    // Define the hashPassword function
+    function hashPassword($password, $pepper) {
+        $salt = bin2hex(random_bytes(16));
+        $hashed_password = hash('sha256', $salt . $password . $pepper);
+        return ['hash' => $hashed_password, 'salt' => $salt];
+    }
 
-  // Hash the password
-  $pepper = "your_pepper_string"; // Define your pepper string
-  $hashed_password_data = hashPassword($password, $pepper);
-  $hashed_password = $hashed_password_data['hash'];
-  $salt = $hashed_password_data['salt'];
+    // Hash the password
+    $pepper = "your_pepper_string"; // Define your pepper string
+    $hashed_password_data = hashPassword($password, $pepper);
+    $hashed_password = $hashed_password_data['hash'];
+    $salt = $hashed_password_data['salt'];
 
-  // Prepare and bind
-  $stmt = $db->prepare("INSERT INTO users (username, password, salt) VALUES (?, ?, ?)");
-  $stmt->bindParam(1, $username);
-  $stmt->bindParam(2, $hashed_password);
-  $stmt->bindParam(3, $salt);
+    // Prepare and bind
+    $stmt = $db->prepare("INSERT INTO users (username, password, salt) VALUES (?, ?, ?)");
+    $stmt->bindParam(1, $username);
+    $stmt->bindParam(2, $hashed_password);
+    $stmt->bindParam(3, $salt);
 
-  // Execute the statement
-  if ($stmt->execute()) {
-    echo "New record created successfully";
-  } else {
-    echo "Error: " . $stmt->error;
-  }
-
+    // Execute the statement
+    if ($stmt->execute()) {
+        $_SESSION['username'] = $username;
+        return true;
+    } else {
+        return false;
+    }
 }
 
-
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (process_form()) {
+        header("Location: main.php");
+        exit();
+    } else {
+        echo "Error: Could not create new record.";
+    }
+}
 ?>
 
 <!DOCTYPE html>
