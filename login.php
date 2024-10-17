@@ -51,8 +51,8 @@ function Login($pdo_db, $username, $password)
     // set session variables and redirect to dashboard if result of query is not 0
     if(count($result) != 0)
     {
-        $_SESSION['username'] = $result[0]['username'];
-        $_SESSION['BID'] = $result[0]['BID'];
+        $_SESSION['username'] = $result['username'];
+        $_SESSION['BID'] = $result['BID'];
         echo "<script type='text/javascript'>location.href = './main.php?action=dashboard';</script>";
         exit();
     }
