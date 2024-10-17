@@ -1,5 +1,5 @@
 <?php
-include 'Hash.php';
+include("Hash.php");
 
 function Connect()
 {
@@ -51,7 +51,7 @@ function Login($pdo_db, $username, $password)
         die("Loginvorgang gescheitert: " . $e->getMessage());
     }
 
-    $result = $statement->fetchAll();
+    $result = $statement->fetch();
     // set session variables and redirect to dashboard if result of query is not 0
     if(count($result) != 0)
     {

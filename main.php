@@ -60,6 +60,9 @@
                         </li>
                         ";
                         echo "<li class='nav-item'>";
+                        echo "<a class='nav-link' href='main.php?action=newlist'>Neue Liste</a>";
+                        echo "</li>";
+                        echo "<li class='nav-item'>";
                         echo "<a class='nav-link' href='main.php?action=newitem'>Neue Aufgabe</a>";
                         echo "</li>";
                     }
