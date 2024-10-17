@@ -1,5 +1,5 @@
 <?php
-
+include 'Hash.php';
 
 $datenbank = "eulbert_gtodo";
 $host = "localhost";
@@ -16,41 +16,25 @@ try
     die("Datenbankverbindung gescheitert: " . $e->getMessage());
 }
 
-function process_form(): bool {
-    global $db, $pepper;
-
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    // Define the hashPassword function
-    function hashPassword($password, $pepper) {
-        $salt = bin2hex(random_bytes(16));
-        $hashed_password = hash('sha256', $salt . $password . $pepper);
-        return ['hash' => $hashed_password, 'salt' => $salt];
-    }
-
-    // Hash the password
-    $pepper = "your_pepper_string"; // Define your pepper string
-    $hashed_password_data = hashPassword($password, $pepper);
-    $hashed_password = $hashed_password_data['hash'];
-    $salt = $hashed_password_data['salt'];
-
-    // Prepare and bind
-    $stmt = $db->prepare("INSERT INTO users (username, password, salt) VALUES (?, ?, ?)");
-    $stmt->bindParam(1, $username);
-    $stmt->bindParam(2, $hashed_password);
-    $stmt->bindParam(3, $salt);
-
-  // Execute the statement
-  if ($stmt->execute()) {
-    echo "New record created successfully";
-  } else {
-    echo "Error: " . $stmt->error;
-  }
-
+function signup($db, $username, $password)
+{
+    $pepper = 'yoxxxxxxx45hghjkj';
+    $hash = hashPassword($password, $pepper);
+    $stmt = $db->prepare("INSERT INTO users (username, password, salt) VALUES (:username, :password, :salt)");
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':password', $hash['hash']);
+    $stmt->bindParam(':salt', $hash['salt']);
+    $stmt->execute();
+    $_SESSION['username'] = $username;
 }
 
-
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    signup($db, $username, $password);
+    echo "<script>window.location.href='main.php?action=dashboard.php';</script>";
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
