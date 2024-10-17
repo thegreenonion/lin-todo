@@ -3,12 +3,11 @@
 function create_list($BID, String $title)
 {
     // create connection to database
-    include("../conn.php");
+    include("./conn.php");
 
     // send creation query of list to database    
     try
     {
-        // INSERT INTO `lists` (`LID`, `name`, `lBID`) VALUES (NULL, 'listexample2', '54');
         $sql = "INSERT INTO `lists` (`name`, `lBID`) VALUES (?, ?);";
         $statement = $db->prepare($sql);
         $statement->execute([$title, $BID]);
@@ -17,14 +16,12 @@ function create_list($BID, String $title)
     {
         die("Loginvorgang gescheitert: " . $e->getMessage());
     }
-
-    echo "Liste erstellt.";
+    echo "<script>window.location.href='main.php?action=getlists'</script>";
 }
 ?>
 <html>
 <body>
-    <h1>Hallo <?php echo $_SESSION['BID']; echo $_SESSION['username'];?></h1>
-    <h1>Erstellen einer Liste</h1>
+    <h1>Erstellen einer neuen Liste für <?php echo "<span style='color: blue'>" . $_SESSION["username"] . "</span>";?></h1>
 
     <?php
     if(isset($_POST['title']))

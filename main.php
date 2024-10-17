@@ -165,7 +165,7 @@
         ?>
     </div>
 </body>
-<footer>
+<footer style="position: relative; bottom: 0; width: 100%; background-color: #f8f9fa; color: black; text-align: center; padding: 10px 0; margin-top: 20px;">
     <span>© 2024 thegreenonion, skeund89, leg0batman
         <br>
         Kontakt via GitHub
@@ -180,6 +180,5 @@
         ?>
         Benutzerzahl: <?php echo $count; ?>
     </span>
-    <p></p>
 </footer>
 </html>
