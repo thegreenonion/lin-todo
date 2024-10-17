@@ -41,23 +41,16 @@ function process_form(): bool {
     $stmt->bindParam(2, $hashed_password);
     $stmt->bindParam(3, $salt);
 
-    // Execute the statement
-    if ($stmt->execute()) {
-        $_SESSION['username'] = $username;
-        return true;
-    } else {
-        return false;
-    }
+  // Execute the statement
+  if ($stmt->execute()) {
+    echo "New record created successfully";
+  } else {
+    echo "Error: " . $stmt->error;
+  }
+
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (process_form()) {
-        header("Location: main.php");
-        exit();
-    } else {
-        echo "Error: Could not create new record.";
-    }
-}
+
 ?>
 
 <!DOCTYPE html>
@@ -71,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 <div class="container">
   <h2>Signup</h2>
-  <form method="post" action="signup.php">
+  <form method="post" action="">
     <div class="form-group">
       <label for="username">Username:</label>
       <input type="text" class="form-control" id="username" name="username" required>
