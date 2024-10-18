@@ -43,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
+
 <body>
   <div class="container">
     <h2>Signup</h2>
@@ -62,7 +64,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="password">Password:</label>
         <input type="password" class="form-control" id="password" name="password" required>
       </div>
-      <div class="g-recaptcha" data-sitekey="6LeWEGQqAAAAAD16sO6r8hIFmQ_OnY8M9fzxtfKt" data-callback="enableSignupButton"></div>
+      <div class="g-recaptcha" data-sitekey="6LeWEGQqAAAAAD16sO6r8hIFmQ_OnY8M9fzxtfKt"
+        data-callback="enableSignupButton"></div>
       <button type="submit" class="btn btn-primary" id="signup-button" disabled>Signup</button>
     </form>
   </div>
@@ -75,4 +78,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
