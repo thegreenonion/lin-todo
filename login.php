@@ -88,14 +88,14 @@ function Login($pdo_db, $username, $password)
                     <div class="card-body bg-light">
                         <form method="post" action="" id="loginform">
                             <div class="form-group">
-                                <label for="form_username">Username:</label>
+                                <label for="form_username">Benutzername:</label>
                                 <input type="text" id="form_username" name="form_username" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label for="form_password">Password:</label>
+                                <label for="form_password">Passwort:</label>
                                 <input type="password" id="form_password" name="form_password" class="form-control" required>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block">Einloggen</button>
+                            <button style="margin-top: 5px" type="submit" class="btn btn-primary btn-block">Einloggen</button>
                         </form>
                     </div>
                 </div>
