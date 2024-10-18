@@ -72,6 +72,8 @@
         </td>
         </tr>";
     }
+    echo "</tbody>";
+    echo "</table>";
     ?>
 </body>
 </html>
