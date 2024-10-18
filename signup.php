@@ -54,9 +54,16 @@ function signup($db, $username, $password)
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  
   $username = $_POST['username'];
   $password = $_POST['password'];
+  $_SESSION['username'] = $username;
+  $_SESSION['password'] = $password;
+  signup($db, $username, $password);
+  echo '<script>window.location.href = "dashboard.php";</script>';
+  exit();
 }
+
 ?>
 
 
