@@ -14,28 +14,6 @@ try {
   die("Datenbankverbindung gescheitert: " . $e->getMessage());
 }
 
-function verifyCaptcha($captchaToken)
-{
-  $secretKey = "6LeWEGQqAAAAAAKTOR0JhGtyDAWVmTqQiQXHSn9K";  // Ersetze durch deinen Secret Key
-  $url = 'https://www.google.com/recaptcha/api/siteverify';
-  $data = array('secret' => $secretKey, 'response' => $captchaToken);
-
-  $options = array(
-    'http' => array(
-      'header' => "Content-type: application/x-www-form-urlencoded\r\n",
-      'method' => 'POST',
-      'content' => http_build_query($data),
-    ),
-  );
-
-  $context = stream_context_create($options);
-  $response = file_get_contents($url, false, $context);
-  if ($response === FALSE) {
-    return null;
-  }
-  return json_decode($response);
-}
-
 function signup($db, $username, $password)
 {
   $pepper = 'yoxxxxxxx45hghjkj';
@@ -54,16 +32,12 @@ function signup($db, $username, $password)
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  
   $username = $_POST['username'];
   $password = $_POST['password'];
-  $_SESSION['username'] = $username;
-  $_SESSION['password'] = $password;
   signup($db, $username, $password);
-  echo '<script>window.location.href = "dashboard.php";</script>';
+  echo '<script>window.location.href = "main.php";</script>';
   exit();
 }
-
 ?>
 
 
