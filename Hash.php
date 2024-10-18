@@ -22,4 +22,3 @@ function verifyPassword(String $password, String $stored_hash, String $stored_sa
 
     return ['hashesMatch' => TRUE, 'hashed_password' => $hashed_password];
 }
-?>
