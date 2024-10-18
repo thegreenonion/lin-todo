@@ -60,20 +60,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   // Verifiziere das reCAPTCHA
   $captchaResponse = verifyCaptcha($captchaToken);
-
-  if ($captchaResponse && $captchaResponse->success) {
-    // Wenn das reCAPTCHA erfolgreich ist, Benutzer registrieren
-    signup($db, $username, $password);
-    echo "<script>window.location.href='main.php?action=dashboard.php';</script>";
-  } else {
-    echo 'reCAPTCHA-Verifizierung fehlgeschlagen. Bitte versuchen Sie es erneut.';
-  }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
+<html></head>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -107,5 +98,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
 </html>
