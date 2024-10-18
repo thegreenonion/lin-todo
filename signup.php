@@ -14,6 +14,28 @@ try {
   die("Datenbankverbindung gescheitert: " . $e->getMessage());
 }
 
+function verifyCaptcha($captchaToken)
+{
+  $secretKey = "6LeWEGQqAAAAAAKTOR0JhGtyDAWVmTqQiQXHSn9K";  // Ersetze durch deinen Secret Key
+  $url = 'https://www.google.com/recaptcha/api/siteverify';
+  $data = array('secret' => $secretKey, 'response' => $captchaToken);
+
+  $options = array(
+    'http' => array(
+      'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+      'method' => 'POST',
+      'content' => http_build_query($data),
+    ),
+  );
+
+  $context = stream_context_create($options);
+  $response = file_get_contents($url, false, $context);
+  if ($response === FALSE) {
+    return null;
+  }
+  return json_decode($response);
+}
+
 function signup($db, $username, $password)
 {
   $pepper = 'yoxxxxxxx45hghjkj';
@@ -24,47 +46,22 @@ function signup($db, $username, $password)
   $stmt->bindParam(':salt', $hash['salt']);
   $stmt->execute();
   $_SESSION['username'] = $username;
-  $statemnt = $db->prepare("SELECT BID FROM users WHERE username = :username");
-  $statemnt->bindParam(':username', $username);
-  $statemnt->execute();
-  $user = $statemnt->fetch();
+  $stmt = $db->prepare("SELECT BID FROM users WHERE username = :username");
+  $stmt->bindParam(':username', $username);
+  $stmt->execute();
+  $user = $stmt->fetch();
   $_SESSION['BID'] = $user['BID'];
-}
-
-function verifyCaptcha($captchaToken)
-{
-  $secretKey = "6LeWEGQqAAAAAAKTOR0JhGtyDAWVmTqQiQXHSn9K";  // Ersetze durch deinen Secret Key
-  $url = 'https://www.google.com/recaptcha/api/siteverify';
-  $data = array('secret' => $secretKey, 'response' => $captchaToken);
-  
-  $options = array(
-    'http' => array(
-      'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-      'method'  => 'POST',
-      'content' => http_build_query($data),
-    ),
-  );
-  
-  $context  = stream_context_create($options);
-  $response = file_get_contents($url, false, $context);
-  if ($response === FALSE) {
-    return null;
-  }
-  return json_decode($response);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $username = $_POST['username'];
   $password = $_POST['password'];
-  $captchaToken = $_POST['g-recaptcha-response']; // Hol dir den reCAPTCHA-Token
-
-  // Verifiziere das reCAPTCHA
-  $captchaResponse = verifyCaptcha($captchaToken);
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
-<html></head>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -72,7 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
-
 <body>
   <div class="container">
     <h2>Signup</h2>
