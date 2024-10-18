@@ -85,7 +85,7 @@
                         Willkommen bei der TODO-Applikation von
                         <a style="color: red" href="https://github.com/thegreenonion">thegreenonion</a>,
                         <a style="color: purple" href="https://github.com/skeund89">skeund89</a> und
-                        <a style="color: orange" href="https://github.com/leg0batman">leg0batman</a>
+                        <a style="color: orange" href="https://github.com/leg0batman">leg0batman</a>!
                     </span>
                 </div>
             </div>

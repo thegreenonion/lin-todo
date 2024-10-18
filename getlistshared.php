@@ -9,7 +9,8 @@
     <?php
     include("conn.php");
     $lid = $_SESSION['lid'];
-    $stmt = $db->prepare("SELECT * FROM items INNER JOIN lists ON lists.LID = items.iLID WHERE iLID = ?");
+    $stmt = $db->prepare("SELECT * FROM items INNER JOIN lists ON lists.LID = items.iLID 
+    INNER JOIN users ON users.BID = lists.lBID WHERE iLID = ?");
     $stmt->execute([$lid]);
     $result = $stmt->fetchAll();
     if(count($result) == 0)
@@ -26,6 +27,7 @@
     echo '<th>Name</th>';
     echo '<th>Zu erledigen bis</th>';
     echo '<th>Status</th>';
+    echo '<th>Gehört zu Benutzer:</th>';
     echo '</tr>';
     echo '</thead>';
     foreach($result as $row)
@@ -35,6 +37,7 @@
         echo '<td>' . htmlspecialchars($row['content']) . '</td>';
         echo '<td>' . htmlspecialchars($row['due']) . '</td>';
         echo '<td>' . ($row['is_done'] ? 'Erledigt' : 'Nicht erledigt') . '</td>';
+        echo '<td>' . htmlspecialchars($row['username']) . '</td>';
         echo '</tr>';
         echo '</tbody>';
     }

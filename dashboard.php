@@ -26,8 +26,8 @@
         $x += $ocount;
     }
     ?>
-    <h4>Schnelle Übersicht:</h4>
-    <p>
+    <h4 style="margin-left: 10px">Schnelle Übersicht:</h4>
+    <p style="margin-left: 20px">
         Du hast <span style="color: green"><?php echo count($result); ?></span> Liste(n).
         <br>
         Darin enthalten sind <span><?php echo $y; ?></span> Aufgabe(n).
