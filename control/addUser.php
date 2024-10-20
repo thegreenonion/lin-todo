@@ -1,30 +1,21 @@
 <?php
 session_start();
 
+// Create connection to db
 include("../conn.php");
 
-function FindBIDByUsername(String $username): int
+function AddUser($db, int $foreign_BID, int $LID)
 {
-    $sql = "SELECT username, BID FROM users WHERE username=?";
-    $statement = $db->prepare($sql);
-    $statement->excecute([$username]);
-    $statement->fetch();
-
-    $BID = $statement['BID'];
-
-    echo $username; echo $BID;
-
-    return $BID;
+    try
+    {
+        $statement = $db->prepare("INSERT INTO darfsehen (dLID, dBID) VALUES (?, ?)");
+        $statement->execute([$LID,$foreign_BID]);;
+    }
+    catch(Exception $e)
+    {
+        die("Eintragung gescheitert: " . $e->getMessage());
+    }
 }
-
-function AddUser(String $foreign_username, int $LID)
-{
-    $foreign_BID = FindBIDByUsername($foreign_username);
-
-
-    
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -36,24 +27,30 @@ function AddUser(String $foreign_username, int $LID)
 </head>
 <body>    
     <?php
-    if(isset($_POST['user']))
+    if(isset($_POST['user_BID']) && isset($_POST['LID']))
     {
-        $foreign_username = $_POST['user'];
-        
+        $foreign_user_BID = $_POST['user_BID'];
+        $LID = $_POST['LID'];
+
         // add user to database
-        AddUser($foreign_username, 1);
+        AddUser($db, $foreign_user_BID, $LID);
     }
     ?>
+
     <form action="" method="post">
-        <select name="user">
+        
+        <select name="user_BID">
             <?php
             $stmt = $db->prepare("SELECT * FROM users");
             $stmt->execute();
             $result = $stmt->fetchAll();
+
             foreach($result as $row) {
+                
                 if($row["BID"] == $_SESSION["BID"]) {
                     continue;
                 }
+                
                 $bid = $row["BID"];
                 $name = $row["username"];
                 echo "<option value=$bid>$name</option>";
@@ -61,18 +58,16 @@ function AddUser(String $foreign_username, int $LID)
             ?>
         </select>
 
-        <select name="list">
+        <select name="LID">
             <?php
-            $stmt = $db->prepare("SELECT * FROM users");
+            $stmt = $db->prepare("SELECT * FROM lists WHERE lBID = ". $_SESSION['BID'] .";");
             $stmt->execute();
             $result = $stmt->fetchAll();
+
             foreach($result as $row) {
-                if($row["BID"] == $_SESSION["BID"]) {
-                    continue;
-                }
-                $bid = $row["BID"];
-                $name = $row["username"];
-                echo "<option value=$bid>$name</option>";
+                $lid = $row["LID"];
+                $name = $row["name"];
+                echo "<option value=$lid>$name</option>";
             }
             ?>
         </select>
