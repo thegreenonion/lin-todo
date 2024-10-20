@@ -31,7 +31,7 @@ function AddUser($db, int $foreign_BID, int $LID)
     $statement->execute([$LID, $foreign_BID]);
     $result = $statement->fetch();
 
-    if(count($result) != 0)
+    if(count($result) == 0)
     {
         die("Dieser Benutzer befindet sich schon in der ausgewählten Liste.");
     }
