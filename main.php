@@ -1,22 +1,26 @@
 <?php
-    session_start();
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo Liste</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         body {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
+
         .content {
             flex: 1;
         }
+
         footer {
             background-color: #f8f9fa;
             color: black;
@@ -24,28 +28,32 @@
             padding: 10px 0;
             margin-top: 20px;
         }
+
         h1 {
             font-weight: bold;
             text-align: center;
             margin-top: 10px;
         }
+
         .inline-paragraph {
             display: inline;
         }
     </style>
 </head>
+
 <body>
     <div class="content">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="main.php">TODO-Applikation</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <?php
-                        if(isset($_SESSION["BID"])) {
+                        if (isset($_SESSION["BID"])) {
                             echo "
                             <li class='nav-item'>
                             <a class='nav-link' href='main.php?action=dashboard'>Home</a>
@@ -60,24 +68,18 @@
                             <a class="nav-link" href="main.php?action=signup">Registrieren</a>
                         </li>
                         <?php
-                        if(isset($_SESSION["BID"])) {
-                            echo "
-                            <li class='nav-item'>
-                            <a class='nav-link' href='main.php?action=getlists'>Listen anzeigen</a>
-                            </li>
-                            ";
-                            echo "<li class='nav-item'>";
-                            echo "<a class='nav-link' href='main.php?action=newlist'>Neue Liste</a>";
-                            echo "</li>";
-                            echo "<li class='nav-item'>";
-                            echo "<a class='nav-link' href='main.php?action=newitem'>Neue Aufgabe</a>";
-                            echo "</li>";
-                        }
-                        if(isset($_SESSION['BID']))
+                        function eli($value, $name)
                         {
                             echo "<li class='nav-item'>";
-                            echo "<a class='nav-link' href='main.php?action=logout'>Logout</a>";
+                            echo "<a class='nav-link' href='main.php?action=" . $value . "'>" . $name . "</a>";
                             echo "</li>";
+                        }
+                        if (isset($_SESSION["BID"])) {
+                            eli("getlists", "Listen anzeigen");
+                            eli("newlist", "Neue Liste");
+                            eli("newitem", "Neue Aufgabe");
+                            eli("adduser", "Listen freigeben");
+                            eli("logout", "Logout");
                         }
                         ?>
                     </ul>
@@ -92,99 +94,85 @@
         </nav>
         <br>
         <?php
-            include("conn.php");
+        include("conn.php");
 
-            $sql = $db->prepare("SELECT COUNT(*) as count FROM users");
-            $sql->execute();
-            $result = $sql->fetch();
-            $count = $result['count'];
-            if(!isset($_SESSION["username"]))
-            {
-                echo "<div>";
-                echo "<span style='color: red; float: right; font-weight: bold; margin-right: 20px;'>
+        $sql = $db->prepare("SELECT COUNT(*) as count FROM users");
+        $sql->execute();
+        $result = $sql->fetch();
+        $count = $result['count'];
+        if (!isset($_SESSION["username"])) {
+            echo "<div>";
+            echo "<span style='color: red; float: right; font-weight: bold; margin-right: 20px;'>
                 Du bist noch nicht angemeldet!
                 </span>";
-                
-                echo "<span style='color: red; font-weight: bold; margin-left: 20px;'>
+
+            echo "<span style='color: red; font-weight: bold; margin-left: 20px;'>
                 Bereits " . $count . " Menschen benutzen TODO!</span>
                 <br>
                 <span style='color: red; font-weight: bold; margin-left: 20px;'>
                 Sei der nächste: 
                 <a href='main.php?action=signup'>Registrieren!</a>
                 </span><br><br>";
-                echo "</div>";
-            }
-            else {
-                echo "<div>";
-                echo "<span style='color: green; float: right; margin-right: 20px;'>
+            echo "</div>";
+        } else {
+            echo "<div>";
+            echo "<span style='color: green; float: right; margin-right: 20px;'>
                 Du bist angemeldet als <span style='color: blue'>" . $_SESSION['username'] . "</span>!
                 </span><br><br>";
-                echo "</div>";
-            }
+            echo "</div>";
+        }
         ?>
         <div style="border: 2px solid black; padding: 10px; margin: 20px;">
             <?php
-                if(isset($_GET["action"]))
-                {
-                    if($_GET["action"] == "login") {
-                        include("login.php");
-                    }
-                    else if($_GET["action"] == "signup") {
-                        include("signup.php");
-                    }
-                    else if($_GET["action"] == "getlists") {
-                        include("getlists.php");
-                    }
-                    else if($_GET["action"] == "logout") {
-                        include("logout.php");
-                    }
-                    else if($_GET["action"] == "dashboard") {
-                        include("dashboard.php");
-                    }
-                    else if($_GET["action"] == "getitems") {
-                        $lid = $_GET["lid"];
-                        $stmt = $db->prepare("SELECT * FROM lists WHERE LID = ? AND lBID = ?");
+            if (isset($_GET["action"])) {
+                if ($_GET["action"] == "login") {
+                    include("login.php");
+                } else if ($_GET["action"] == "signup") {
+                    include("signup.php");
+                } else if ($_GET["action"] == "getlists") {
+                    include("getlists.php");
+                } else if ($_GET["action"] == "logout") {
+                    include("logout.php");
+                } else if ($_GET["action"] == "dashboard") {
+                    include("dashboard.php");
+                } else if ($_GET["action"] == "getitems") {
+                    $lid = $_GET["lid"];
+                    $stmt = $db->prepare("SELECT * FROM lists WHERE LID = ? AND lBID = ?");
+                    $stmt->execute([$lid, $_SESSION["BID"]]);
+                    $result = $stmt->fetchAll();
+                    if (count($result) != 0) {
+                        $_SESSION["lid"] = $_GET["lid"];
+                        include("getitems.php");
+                    } else {
+                        $stmt = $db->prepare("SELECT * FROM darfsehen WHERE dLID = ? AND dBID = ?");
                         $stmt->execute([$lid, $_SESSION["BID"]]);
                         $result = $stmt->fetchAll();
-                        if(count($result) != 0) {
+                        if (count($result) != 0) {
                             $_SESSION["lid"] = $_GET["lid"];
-                            include("getitems.php");
-                        }
-                        else{
-                            $stmt = $db->prepare("SELECT * FROM darfsehen WHERE dLID = ? AND dBID = ?");
-                            $stmt->execute([$lid, $_SESSION["BID"]]);
-                            $result = $stmt->fetchAll();
-                            if(count($result) != 0)
-                            {
-                                $_SESSION["lid"] = $_GET["lid"];
-                                include("getlistshared.php");
-                            }
+                            include("getlistshared.php");
                         }
                     }
-                    else if($_GET["action"] == "edititem") {
-                        $_SESSION["IID"] = $_GET["iid"];
-                        include("./control/edititem.php");
-                    }
-                    else if($_GET["action"] == "deleteitem") {
-                        $_SESSION["IID"] = $_GET["iid"];
-                        include("./control/deleteitem.php");
-                    }
-                    else if($_GET["action"] == "deletelist") {
-                        $_SESSION["lid"] = $_GET["lid"];
-                        include("./control/deletelist.php");
-                    }
-                    else if($_GET["action"] == "newitem") {
-                        include("./newitem.php");
-                    }
-                    else if($_GET["action"] == "newlist") {
-                        include("control/createList.php");
-                    }
+                } else if ($_GET["action"] == "edititem") {
+                    $_SESSION["IID"] = $_GET["iid"];
+                    include("./control/edititem.php");
+                } else if ($_GET["action"] == "deleteitem") {
+                    $_SESSION["IID"] = $_GET["iid"];
+                    include("./control/deleteitem.php");
+                } else if ($_GET["action"] == "deletelist") {
+                    $_SESSION["lid"] = $_GET["lid"];
+                    include("./control/deletelist.php");
+                } else if ($_GET["action"] == "newitem") {
+                    include("./newitem.php");
+                } else if ($_GET["action"] == "newlist") {
+                    include("control/createList.php");
+                } else if ($_GET["action"] == "adduser") {
+                    include("control/addUser.php");
                 }
-                else {
-                    echo "<div style='text-align: center'>";
-                    echo "<span>Hier könnte ihre Liste stehen!</span>";
-                    echo "</div>";
-                }
+            } else {
+                echo "<div style='text-align: center'>";
+                echo "<span>Hier könnte ihre Liste stehen!</span>";
+                echo "</div>";
+            }
             ?>
         </div>
     </div>
@@ -205,4 +193,5 @@
         </span>
     </footer>
 </body>
+
 </html>
