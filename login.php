@@ -1,11 +1,7 @@
 <?php
 include("Hash.php");
 
-function Connect()
-{
-    include("conn.php");
-    return $db;
-}
+include("conn.php");
 
 function Login($pdo_db, $username, $password)
 {
@@ -74,7 +70,6 @@ function Login($pdo_db, $username, $password)
             $username = $_POST['form_username'];
             $password = $_POST['form_password'];
             
-            $db = Connect();
             Login($db, $username, $password);
         }
     ?>
