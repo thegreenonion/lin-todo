@@ -3,6 +3,7 @@ include("conn.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <body>
     <h1>Neues Item zu Liste hinzufügen:</h1>
     <form action="control/setitem.php" method="post">
@@ -19,7 +20,7 @@ include("conn.php");
             $stmt = $db->prepare($sql);
             $stmt->execute([$_SESSION["BID"]]);
             $result = $stmt->fetchAll();
-            foreach($result as $row) {
+            foreach ($result as $row) {
                 $lid = $row["LID"];
                 $name = $row["name"];
                 echo "<option value=$lid>$name</option>";
@@ -29,4 +30,5 @@ include("conn.php");
         <input type="submit" value="Hinzufügen">
     </form>
 </body>
+
 </html>

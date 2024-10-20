@@ -5,12 +5,10 @@ $user = "hwalde";
 $passwd = "UG2aepai4g";
 
 // Datenbankverbindung herstellen
-try 
-{
+try {
     $db = new PDO("mysql:dbname=$datenbank;host=$host", $user, $passwd);
-    $db -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch(PDOException $e) 
-{
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
     die("Datenbankverbindung gescheitert: " . $e->getMessage());
 }
 ?>
