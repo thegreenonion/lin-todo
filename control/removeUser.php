@@ -4,7 +4,7 @@ session_start();
 // create db connection
 include("../conn.php");
 
-function overview($db, int $LID)
+function requestSharedUsers($db, int $LID)
 {
     try
     {
@@ -18,7 +18,29 @@ function overview($db, int $LID)
     }
 
     $result = $statement->fetchAll();
-    var_dump($result);
+    
+    return $result;
+}
+
+function createTable($queryresult)
+{
+    echo "
+        <table>
+            <tr>
+                <th>User</th>
+                <th>Entfernen</th>
+            </tr>
+        ";
+
+    foreach ($queryresult as $row)
+    {
+        echo "
+            <tr>
+                <td>". $row['username'] ."</td>
+                <td></td>
+            </tr>
+        ";
+    }
 }
 ?>
 
@@ -30,6 +52,9 @@ function overview($db, int $LID)
     <title>Entfernen von Benutzer</title>
 </head>
 <body>
-    <?php overview($db, 2)?>
+    <?php 
+    $result = requestSharedUsers($db, 2);
+    createTable($result);
+    ?>
 </body>
 </html>
