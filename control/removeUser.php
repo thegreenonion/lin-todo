@@ -65,9 +65,35 @@ function removeUser($db, int $BID, int $LID)
     <title>Entfernen von Benutzer</title>
 </head>
 <body>
-    <?php 
-    $result = requestSharedUsers($db, 2);
-    createTable($result);
-    ?>
+
+    <form method="post" action="">
+
+        <!-- Selection of the list with a dropdown-list of all owned lists -->
+        <select name="LID" id="list-selection">
+            <?php
+            // request all owned lists
+            $statement = $db->prepare("SELECT LID, name FROM lists WHERE lBID=?");
+            $statement->execute([$_SESSION['BID']]);
+            $result = $statement->fetchAll();
+
+            foreach ($result as $row){
+                echo "
+                    <option value='". $row['LID'] ."'>". $row['name'] ."</option>
+                ";
+            }
+            ?>
+        </select>  
+        
+        <input type="submit" value="Liste auswählen">
+    </form>
+    
+    <?php
+    if (isset($_POST['LID']))
+    {
+        $LID = $_POST['LID'];
+        $result = requestSharedUsers($db, $LID);
+        createTable($result, $LID);
+    }
+    ?>   
 </body>
 </html>
