@@ -41,6 +41,19 @@ function createTable($queryresult)
             </tr>
         ";
     }
+function removeUser($db, int $BID, int $LID)
+{
+    try
+    {
+        $statement = $db->prepare("DELETE FROM darfsehen d WHERE d.dBID=? AND d.dLID=?");
+        $statement->execute([$BID, $LID]);
+    }
+    catch (Exception $e)
+    {
+        die("Löschen fehlgeschlagen: ". $e->getMessage());
+    }
+
+    echo "Erfolgreich entfernt.";
 }
 ?>
 
