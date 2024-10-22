@@ -22,7 +22,7 @@ function requestSharedUsers($db, int $LID)
     return $result;
 }
 
-function createTable($queryresult)
+function createTable(array $queryresult)
 {
     echo "
         <table>
@@ -37,10 +37,19 @@ function createTable($queryresult)
         echo "
             <tr>
                 <td>". $row['username'] ."</td>
-                <td></td>
+                <td>
+                    <form action='' method='post'>
+                        <input type='hidden' name='BID' value='". $row['BID'] ."'>
+                        <input type='submit' value='Entfernen'>
+                    </form>
+                </td>
             </tr>
         ";
     }
+
+    echo "</table>";
+}
+
 function removeUser($db, int $BID, int $LID)
 {
     try
@@ -91,8 +100,16 @@ function removeUser($db, int $BID, int $LID)
     if (isset($_POST['LID']))
     {
         $LID = $_POST['LID'];
+        $_SESSION['LID'] = $LID;
+
         $result = requestSharedUsers($db, $LID);
         createTable($result, $LID);
+    }
+
+    if (isset($_POST['BID']))
+    {
+        $BID = $_POST['BID'];
+        removeUser($db, $BID, $_SESSION['LID']);
     }
     ?>   
 </body>
