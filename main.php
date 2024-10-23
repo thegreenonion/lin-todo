@@ -8,37 +8,9 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo Liste</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-dark-5@1.1.3/dist/css/bootstrap-night.min.css">
 
-        .content {
-            flex: 1;
-        }
 
-        footer {
-            background-color: #f8f9fa;
-            color: black;
-            text-align: center;
-            padding: 10px 0;
-            margin-top: 20px;
-        }
-
-        h1 {
-            font-weight: bold;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .inline-paragraph {
-            display: inline;
-        }
-    </style>
 </head>
 
 <body>
@@ -85,9 +57,9 @@ session_start();
                     </ul>
                     <span class="navbar-text">
                         Willkommen bei der TODO-Applikation von
-                        <a style="color: red" href="https://github.com/thegreenonion">thegreenonion</a>,
-                        <a style="color: purple" href="https://github.com/skeund89">skeund89</a> und
-                        <a style="color: orange" href="https://github.com/leg0batman">leg0batman</a>!
+                        <a style="color: cream" href="https://github.com/thegreenonion">thegreenonion</a>,
+                        <a style="color: cream" href="https://github.com/skeund89">skeund89</a> und
+                        <a style="color: cream" href="https://github.com/leg0batman">leg0batman</a>!
                     </span>
                 </div>
             </div>
@@ -116,8 +88,8 @@ session_start();
             echo "</div>";
         } else {
             echo "<div>";
-            echo "<span style='color: green; float: right; margin-right: 20px;'>
-                Du bist angemeldet als <span style='color: blue'>" . $_SESSION['username'] . "</span>!
+            echo "<span style='color: pink; float: right; margin-right: 20px;'>
+                Du bist angemeldet als <span style='color: pink'>" . $_SESSION['username'] . "</span>!
                 </span><br><br>";
             echo "</div>";
         }
@@ -176,7 +148,7 @@ session_start();
             ?>
         </div>
     </div>
-    <footer>
+    <footer style="position: fixed; bottom: 0; width: 100%;  text-align: center; padding: 10px 0;">
         <span>© 2024 thegreenonion, skeund89, leg0batman
             <br>
             Kontakt via GitHub

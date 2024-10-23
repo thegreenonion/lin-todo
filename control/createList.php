@@ -21,7 +21,7 @@ function create_list($BID, String $title)
 ?>
 <html>
 <body>
-    <h1>Erstellen einer neuen Liste für <?php echo "<span style='color: blue'>" . $_SESSION["username"] . "</span>";?></h1>
+    <h1>Erstellen einer neuen Liste für <?php echo "<span style='color: cream'>" . $_SESSION["username"] . "</span>";?></h1>
 
     <?php
     if(isset($_POST['title']))
@@ -34,7 +34,7 @@ function create_list($BID, String $title)
     ?>
     <form method='post' action="">
         <input type="text" name="title">
-        <input type="submit" value="Erstellen">
+        <input type="submit" value="Erstellen" style="background-color: #007bff; border-color: #007bff;">
     </form>
 
 </body>

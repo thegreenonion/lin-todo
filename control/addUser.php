@@ -53,7 +53,7 @@ function AddUser($db, int $foreign_BID, int $LID)
             margin: 10px;
         }
     </style>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+   
 </head>
 
 <body>
@@ -93,8 +93,41 @@ function AddUser($db, int $foreign_BID, int $LID)
 
         <div class="mb-3">
             <label for="username" class="form-label">Teilen mit:</label>
-            <input type="text" name="username" class="form-control" placeholder="Benutzername">
+            <input type="text" name="username" id="username" class="form-control" placeholder="Benutzername" onkeyup="suggestUsers(this.value)">
+            <div id="suggestions" style="background-color: #fff; border: 1px solid #ccc; display: none; position: absolute; z-index: 1000;"></div>
         </div>
+
+        <script>
+            function suggestUsers(query) {
+            if (query.length == 0) {
+                document.getElementById('suggestions').style.display = 'none';
+                return;
+            }
+
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                const suggestions = JSON.parse(this.responseText);
+                let suggestionBox = document.getElementById('suggestions');
+                suggestionBox.innerHTML = '';
+                suggestions.forEach(function(user) {
+                    let div = document.createElement('div');
+                    div.innerHTML = user.username;
+                    div.style.padding = '10px';
+                    div.style.cursor = 'pointer';
+                    div.onclick = function() {
+                    document.getElementById('username').value = user.username;
+                    suggestionBox.style.display = 'none';
+                    };
+                    suggestionBox.appendChild(div);
+                });
+                suggestionBox.style.display = 'block';
+                }
+            };
+            xhr.open("GET", "suggestUsers.php?query=" + query, true);
+            xhr.send();
+            }
+        </script>
 
         <button type="submit" class="btn btn-primary" style="background-color: #007bff; border-color: #007bff;">Benutzer hinzufügen</button>
     </form>
