@@ -1,11 +1,9 @@
 <?php
-// Create connection to db
-include("../conn.php");
+include "../conn.php";
+
 
 function FindBIDByUsername($db, string $username): int
 {
-    // Finds and returns the BID (user ID) for a given username from the database
-
     $sql = "SELECT username, BID FROM users WHERE username=?";
     $statement = $db->prepare($sql);
     $statement->execute([$username]);
@@ -23,114 +21,140 @@ function FindBIDByUsername($db, string $username): int
 
 function AddUser($db, int $foreign_BID, int $LID)
 {
-    // Checks if a user is already in the list by querying the database with given IDs and terminates if found.
     $statement = $db->prepare("SELECT dLID, dBID FROM darfsehen WHERE dLID=? AND dBID=?");
     $statement->execute([$LID, $foreign_BID]);
     $result = $statement->fetch();
 
-    if (count($result) == 0) {
-        die("Dieser Benutzer befindet sich schon in der ausgewählten Liste.");
+    if ($result) {
+        echo "User already has access to this list.";
+        return;
     }
 
-    // Inserts a new record into the 'darfsehen' table with provided IDs to add a user
-    try {
-        $statement = $db->prepare("INSERT INTO darfsehen (dLID, dBID) VALUES (?, ?)");
-        $statement->execute([$LID, $foreign_BID]);
-        ;
-    } catch (Exception $e) {
-        die("Eintragung gescheitert: " . $e->getMessage());
+    // Check if the LID exists in the lists table
+    $statement = $db->prepare("SELECT LID FROM lists WHERE LID=?");
+    $statement->execute([$LID]);
+    $result = $statement->fetch();
+
+    if (!$result) {
+        echo "List ID does not exist.";
+        return;
+    }
+
+
+    $statement = $db->prepare("INSERT INTO darfsehen (dLID, dBID) VALUES (?, ?)");
+    $statement->execute([$LID, $foreign_BID]);
+    echo "User added successfully.";
+}
+
+function GetUserLists($db, $userID)
+{
+    $sql = "SELECT LID, name FROM lists WHERE lBID=?";
+    $statement = $db->prepare($sql);
+    $statement->execute([$userID]);
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
+}
+
+$userID = $_SESSION['BID']; 
+$lists = GetUserLists($db, $userID);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'];
+    $LID = $_POST['LID'];
+
+    $foreign_BID = FindBIDByUsername($db, $username);
+    if ($foreign_BID === -1) {
+        echo "Username not found.";
+    } else {
+        AddUser($db, $foreign_BID, $LID);
     }
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <style>
-        input {
-            margin: 10px;
-        }
-    </style>
-   
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suggest Users</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+<style>
 
-<body>
-    <?php
-    if (isset($_POST['username']) && isset($_POST['LID'])) {
-        $foreign_username = $_POST['username'];
-        $foreign_user_BID = FindBIDByUsername($db, $foreign_username);
-        $LID = $_POST['LID'];
-
-        if ($foreign_user_BID == -1) {
-            echo "Falscher Benutzername";
-        } else {
-            // add user to database
-            AddUser($db, $foreign_user_BID, $LID);
-        }
-
+    #suggestions {
+        background-color: #495057;
+        border: 1px solid #6c757d;
+        color: #ffffff;
+        max-height: 150px;
+        overflow-y: auto;
+        display: none;
     }
-    ?>
 
-    <form action="" method="post" class="container mt-5" style="border: 2px solid #000; padding: 20px; background-color: #333; color: #fff; border-radius: 15px;">
-        <div class="mb-3">
-            <label for="LID" class="form-label">Liste auswählen:</label>
-            <select name="LID" class="form-select">
-                <?php
-                $stmt = $db->prepare("SELECT * FROM lists WHERE lBID = " . $_SESSION['BID'] . ";");
-                $stmt->execute();
-                $result = $stmt->fetchAll();
+    #suggestions div {
+        padding: 8px;
+        cursor: pointer;
+    }
 
-                foreach ($result as $row) {
-                    $lid = $row["LID"];
-                    $name = $row["name"];
-                    echo "<option value=\"$lid\">$name</option>";
-                }
-                ?>
-            </select>
-        </div>
+    #suggestions div:hover {
+        background-color: #6c757d;
+    }
+</style>
+<body>
+    <div class="container mt-5">
+        <h1>Suggest Users</h1>
+        <form method="POST" action="">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" onkeyup="suggestUsers(this.value)">
+                <div id="suggestions"></div>
+            </div>
+            <div class="mb-3">
+                <label for="LID" class="form-label">Select List</label>
+                <select class="form-control" id="LID" name="LID">
+                    <?php foreach ($lists as $list): ?>
+                        <option value="<?= $list['LID'] ?>"><?= htmlspecialchars($list['name']) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Share List</button>
+        </form>
+    </div>
 
-        <div class="mb-3">
-            <label for="username" class="form-label">Teilen mit:</label>
-            <input type="text" name="username" id="username" class="form-control" placeholder="Benutzername" onkeyup="suggestUsers(this.value)">
-            <div id="suggestions" style="background-color: #fff; border: 1px solid #ccc; display: none; position: absolute; z-index: 1000;"></div>
-        </div>
-
-        <script>
-            function suggestUsers(query) {
+    <script>
+        function suggestUsers(query) {
             if (query.length == 0) {
                 document.getElementById('suggestions').style.display = 'none';
                 return;
             }
 
-            const xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                const suggestions = JSON.parse(this.responseText);
-                let suggestionBox = document.getElementById('suggestions');
-                suggestionBox.innerHTML = '';
-                suggestions.forEach(function(user) {
-                    let div = document.createElement('div');
-                    div.innerHTML = user.username;
-                    div.style.padding = '10px';
-                    div.style.cursor = 'pointer';
-                    div.onclick = function() {
-                    document.getElementById('username').value = user.username;
-                    suggestionBox.style.display = 'none';
-                    };
-                    suggestionBox.appendChild(div);
-                });
-                suggestionBox.style.display = 'block';
+            $.ajax({
+                url: 'https://hmbldtw.spdns.org/~tsuskov/web/lin-todo/control/sugestUsers.php', 
+                type: 'GET',
+                data: { query: query },
+                success: function(response) {
+                    try {
+                        const suggestions = JSON.parse(response);
+                        let suggestionBox = document.getElementById('suggestions');
+                        suggestionBox.innerHTML = '';
+                        suggestions.forEach(function(user) {
+                            let div = document.createElement('div');
+                            div.innerHTML = user.username;
+                            div.onclick = function() {
+                                document.getElementById('username').value = user.username;
+                                suggestionBox.style.display = 'none';
+                            };
+                            suggestionBox.appendChild(div);
+                        });
+                        suggestionBox.style.display = 'block';
+                    } catch (e) {
+                        console.error("Error parsing JSON:", e);
+                        console.log("Response:", response);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error in AJAX call:", status, error);
                 }
-            };
-            xhr.open("GET", "suggestUsers.php?query=" + query, true);
-            xhr.send();
-            }
-        </script>
-
-        <button type="submit" class="btn btn-primary" style="background-color: #007bff; border-color: #007bff;">Benutzer hinzufügen</button>
-    </form>
+            });
+        }
+    </script>
 </body>
-
 </html>
