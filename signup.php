@@ -1,19 +1,6 @@
 <?php
 include 'Hash.php';
-
-$datenbank = "eulbert_gtodo";
-$host = "localhost";
-$user = "hwalde";
-$passwd = "UG2aepai4g";
-$recaptchaSecret = 'YOUR_SECRET_KEY'; // Add your reCAPTCHA secret key here
-
-// Datenbankverbindung herstellen
-try {
-  $db = new PDO("mysql:dbname=$datenbank;host=$host", $user, $passwd);
-  $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-  die("Datenbankverbindung gescheitert: " . $e->getMessage());
-}
+include("conn.php");
 
 function signup($db, $username, $password)
 {

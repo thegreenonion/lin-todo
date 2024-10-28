@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
 </head>
+
 <body>
-    <h1>Hallo, <?php echo $_SESSION['username'];?>!</h1>
+    <h1>Hallo, <?php echo $_SESSION['username']; ?>!</h1>
     <p style="text-align: center">Es ist <?php echo date("H:i") ?> Uhr.</p>
     <br>
     <?php
@@ -14,8 +16,7 @@
     include("./control/getListsByID.php");
     $x = 0;
     $y = 0;
-    foreach($result as $row)
-    {
+    foreach ($result as $row) {
         $stmt = $db->prepare("SELECT COUNT(*) FROM items WHERE iLID = ?");
         $stmt->execute([$row['LID']]);
         $count = $stmt->fetch()[0];
@@ -38,4 +39,5 @@
     </p>
     <p></p>
 </body>
+
 </html>

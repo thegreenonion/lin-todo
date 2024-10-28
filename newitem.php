@@ -20,7 +20,7 @@ include("conn.php");
             $stmt = $db->prepare($sql);
             $stmt->execute([$_SESSION["BID"]]);
             $result = $stmt->fetchAll();
-            foreach($result as $row) {
+            foreach ($result as $row) {
                 $lid = $row["LID"];
                 $name = $row["name"];
                 echo "<option value=$lid>$name</option>";
@@ -30,4 +30,5 @@ include("conn.php");
         <button type="submit" style="background-color: #f0707; color: white;">Hinzufügen</button>
     </form>
 </body>
+
 </html>

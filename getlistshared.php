@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Geteilte Liste</title>
 </head>
+
 <body>
     <?php
     include("conn.php");
@@ -12,8 +14,7 @@
     INNER JOIN users ON users.BID = lists.lBID WHERE iLID = ?");
     $stmt->execute([$lid]);
     $result = $stmt->fetchAll();
-    if(count($result) == 0)
-    {
+    if (count($result) == 0) {
         echo "<p>Keine items vorhanden</p>";
         return;
     }
@@ -29,8 +30,7 @@
     echo '<th>Gehört zu Benutzer:</th>';
     echo '</tr>';
     echo '</thead>';
-    foreach($result as $row)
-    {
+    foreach ($result as $row) {
         echo '<tbody>';
         echo '<tr>';
         echo '<td>' . htmlspecialchars($row['content']) . '</td>';
@@ -43,4 +43,5 @@
     echo '</table>';
     ?>
 </body>
+
 </html>
