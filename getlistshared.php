@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Geteilte Liste</title>
-    <link rel="stylesheet" href="path/to/your/css/file.css">
 </head>
 
 <body>

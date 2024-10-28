@@ -1,7 +1,5 @@
 <?php
 include 'Hash.php';
-
-// Create connection to db
 include("conn.php");
 
 function signup($db, $username, $password)
@@ -38,8 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Signup</title>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
@@ -47,16 +43,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h2>Signup</h2>
     <form id="demo-form" method="post" action="">
       <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" class="form-control" id="username" name="username" required>
+      <label for="username">Username:</label>
+      <input type="text" class="form-control" id="username" name="username" required>
       </div>
       <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" class="form-control" id="password" name="password" required>
+      <label for="password">Password:</label>
+      <input type="password" class="form-control" id="password" name="password" required>
       </div>
-      <div class="g-recaptcha" data-sitekey="6LeWEGQqAAAAAD16sO6r8hIFmQ_OnY8M9fzxtfKt"
-        data-callback="enableSignupButton"></div>
-      <button type="submit" class="btn btn-primary" id="signup-button" disabled>Signup</button>
+      <div class="g-recaptcha" data-sitekey="6LeWEGQqAAAAAD16sO6r8hIFmQ_OnY8M9fzxtfKt" data-callback="enableSignupButton"></div>
+      <button type="submit" class="btn btn-success" id="signup-button" disabled style="background-color: #007bff; border-color: #007bff;">Signup</button>
     </form>
   </div>
   <script>
@@ -67,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
 
 </html>
