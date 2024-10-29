@@ -24,7 +24,7 @@ function createTable(array $queryresult)
 {
     if(empty($queryresult))
     {
-        echo "Die Liste is mit keinen Benutzern geteilt.";
+        echo "Die Liste wird mit keinen Benutzern geteilt.";
         return;
     }
     
