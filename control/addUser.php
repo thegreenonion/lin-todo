@@ -21,6 +21,7 @@ function FindBIDByUsername($db, string $username): int
 
 function AddUser($db, int $foreign_BID, int $LID)
 {
+    // Check if the user already has access to the list
     $statement = $db->prepare("SELECT dLID, dBID FROM darfsehen WHERE dLID=? AND dBID=?");
     $statement->execute([$LID, $foreign_BID]);
     $result = $statement->fetch();
@@ -40,6 +41,15 @@ function AddUser($db, int $foreign_BID, int $LID)
         return;
     }
 
+    // Check if owner of the list is trying to add themselves
+    $statement = $db->prepare("SELECT lBID FROM lists WHERE LID=:LID");
+    $statement->execute([':LID' => $LID]);
+    $result = $statement->fetch();
+
+    if($result['lBID'] == $foreign_BID) {
+        echo "You cannot add yourself to your own list.";
+        return;
+    }
 
     $statement = $db->prepare("INSERT INTO darfsehen (dLID, dBID) VALUES (?, ?)");
     $statement->execute([$LID, $foreign_BID]);
