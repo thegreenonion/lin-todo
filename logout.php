@@ -1,6 +1,5 @@
 <?php
-session_start();
 session_unset();
 session_destroy();
-header("Location: main.php");
-?>
+echo "<script>window.location.href='main.php'</script>";
+exit();
