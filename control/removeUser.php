@@ -4,19 +4,16 @@ include("../conn.php");
 
 function requestSharedUsers($db, int $LID)
 {
-    try
-    {
+    try {
         $sql = "SELECT U.username, U.BID FROM users U, darfsehen D WHERE U.BID = D.dBID AND dLID=?";
         $statement = $db->prepare($sql);
         $statement->execute([$LID]);
-    } 
-    catch (Exception $e) 
-    {
+    } catch (Exception $e) {
         die("Laden der Übersicht gescheitert: " . $e->getMessage());
     }
 
     $result = $statement->fetchAll();
-    
+
     return $result;
 }
 
@@ -36,14 +33,13 @@ function createTable(array $queryresult)
             </tr>
         ";
 
-    foreach ($queryresult as $row)
-    {
+    foreach ($queryresult as $row) {
         echo "
             <tr>
-                <td>". $row['username'] ."</td>
+                <td>" . $row['username'] . "</td>
                 <td>
                     <form action='' method='post'>
-                        <input type='hidden' name='BID' value='". $row['BID'] ."'>
+                        <input type='hidden' name='BID' value='" . $row['BID'] . "'>
                         <input type='submit' value='Entfernen'>
                     </form>
                 </td>
@@ -56,14 +52,11 @@ function createTable(array $queryresult)
 
 function removeUser($db, int $BID, int $LID)
 {
-    try
-    {
+    try {
         $statement = $db->prepare("DELETE FROM darfsehen d WHERE d.dBID=? AND d.dLID=?");
         $statement->execute([$BID, $LID]);
-    }
-    catch (Exception $e)
-    {
-        die("Löschen fehlgeschlagen: ". $e->getMessage());
+    } catch (Exception $e) {
+        die("Löschen fehlgeschlagen: " . $e->getMessage());
     }
 
     echo "Erfolgreich entfernt.";
@@ -72,11 +65,13 @@ function removeUser($db, int $BID, int $LID)
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entfernen von Benutzer</title>
 </head>
+
 <body>
 
     <form method="post" action="">
@@ -89,20 +84,19 @@ function removeUser($db, int $BID, int $LID)
             $statement->execute([$_SESSION['BID']]);
             $result = $statement->fetchAll();
 
-            foreach ($result as $row){
+            foreach ($result as $row) {
                 echo "
-                    <option value='". $row['LID'] ."'>". $row['name'] ."</option>
+                    <option value='" . $row['LID'] . "'>" . $row['name'] . "</option>
                 ";
             }
             ?>
-        </select>  
-        
+        </select>
+
         <input type="submit" value="Liste auswählen">
     </form>
-    
+
     <?php
-    if (isset($_POST['LID']))
-    {
+    if (isset($_POST['LID'])) {
         $LID = $_POST['LID'];
         $_SESSION['LID'] = $LID;
 
@@ -110,11 +104,11 @@ function removeUser($db, int $BID, int $LID)
         createTable($result, $LID);
     }
 
-    if (isset($_POST['BID']))
-    {
+    if (isset($_POST['BID'])) {
         $BID = $_POST['BID'];
         removeUser($db, $BID, $_SESSION['LID']);
     }
-    ?>   
+    ?>
 </body>
+
 </html>
