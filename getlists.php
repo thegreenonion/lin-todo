@@ -20,7 +20,9 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1 class="text-center">Listen von <?php echo "<span style='color: cream;'>$_SESSION[username]</span>"; ?></h1>
+                <h1 class="text-center">Listen von
+                    <?php echo "<span style='color: cream;'>$_SESSION[username]</span>"; ?>
+                </h1>
             </div>
         </div>
 
@@ -37,7 +39,7 @@
                 } else {
                     echo "<div class='table-responsive'>";
                     echo "<table class='table table-bordered'>";
-                    echo "<thead class='thead-dark'><tr><th>Name</th><th>Anzahl Aufgaben</th><th>Davon unerledigt</th><th>Löschen</th></tr></thead>";
+                    echo "<thead class='thead-dark'><tr><th>Name</th><th>Anzahl Aufgaben</th><th>Davon unerledigt</th><th>Geteilt mit</th><th>Löschen</th></tr></thead>";
                     echo "<tbody>";
                     foreach ($result as $row) {
                         $stmt = $db->prepare("SELECT COUNT(*) FROM items WHERE iLID = ?");
@@ -46,11 +48,19 @@
                         $stmt = $db->prepare("SELECT COUNT(*) FROM items WHERE iLID = ? AND is_done = 0");
                         $stmt->execute([$row['LID']]);
                         $ocount = $stmt->fetch()[0];
+                        $stmt = $db->prepare("SELECT users.username FROM darfsehen
+                        INNER JOIN users ON users.BID = darfsehen.dBID
+                        WHERE dLID = ?");
+                        $stmt->execute([$row["LID"]]);
+                        $result2 = $stmt->fetchAll();
+                        $str = "";
+                        $str = $stmt->fetch()["username"];
                         $cmd = "window.location.href='main.php?action=deletelist&lid=" . $row["LID"] . "'";
                         echo "<tr>
                                 <td><a href='main.php?action=getitems&lid=$row[LID]'>$row[name]</a></td>
                                 <td>$count</td>
                                 <td><span style='color: red'>$ocount</span></td>
+                                <td>$str</td>
                                 <td><button onclick=$cmd class='btn btn-danger'>Löschen</button></td>
                             </tr>";
                     }
