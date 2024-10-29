@@ -1,7 +1,7 @@
 <?php
 include("vars/db.php");
 include("vars/dbuser.php");
-include("vars/dbpass");
+include("vars/dbpass.php");
 $datenbank = $dbn;
 $host = "localhost";
 $user = $dbuser;
