@@ -19,5 +19,5 @@ jobs:
           port: 22
           username: eulbert
           password: ${{ secrets.password }}
-          sourceDir: ../
-          targetDir: ./~eulbert/web/gtodo/lin-todo/
+          sourceDir: lin-todo/
+          targetDir: /~eulbert/web/gtodo/lin-todo/
