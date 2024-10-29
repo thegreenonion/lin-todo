@@ -12,12 +12,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Push to SFTP
-        uses: AbleLincoln/push-to-sftp@v1.0
+      - name: SFTP Deploy
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
-          host: hmbldtw.spdns.org
-          port: 22
+          # username
           username: eulbert
-          password: ${{ secrets.password }}
-          sourceDir: /home/runner/work/lin-todo/lin-todo
-          targetDir: hmbldtw.spdns.org/~eulbert/web/gtodo/lin-todo/
+          # your sftp server
+          server: hmbldtw.spdns.org
+          # files will copy to under remote_path
+          remote_path: /home/eulbert/public_html/web/gtodo/lin-todo
+          # SSH passsword，If a password is set, the secret key pair is ignored
+          password: ${{ secrets.SuperSecret }}
