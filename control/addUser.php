@@ -145,14 +145,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         const suggestions = JSON.parse(response);
                         let suggestionBox = document.getElementById('suggestions');
                         suggestionBox.innerHTML = '';
+                        
+                        let uniqueUsernames = [];
                         suggestions.forEach(function(user) {
-                            let div = document.createElement('div');
-                            div.innerHTML = user.username;
-                            div.onclick = function() {
-                                document.getElementById('username').value = user.username;
-                                suggestionBox.style.display = 'none';
-                            };
-                            suggestionBox.appendChild(div);
+                            if (!uniqueUsernames.includes(user.username)) {
+                                uniqueUsernames.push(user.username);
+
+                                let div = document.createElement('div');
+                                div.innerHTML = user.username;
+                                div.onclick = function() {
+                                    document.getElementById('username').value = user.username;
+                                    suggestionBox.style.display = 'none';
+                                };
+                                suggestionBox.appendChild(div);
+                            }
                         });
                         suggestionBox.style.display = 'block';
                     } catch (e) {
