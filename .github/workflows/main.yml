@@ -14,7 +14,9 @@ jobs:
 
       - name: SFTP Deploy
         env:
-          PASSWORD: ${{  secrets.dbpass  }}
+          DBPASS: ${{  secrets.dbpass  }}
+          DBUSER: ${{  secrets.dbuser  }}
+          DB: ${{  secrets.db  }}
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
           # username
