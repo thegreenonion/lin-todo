@@ -12,11 +12,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Create .env file
+        run: touch .env
+             echo DB=${{  secrets.db  }} >> .env
+             echo DBUSER=${{  secrets.dbuser  }} >> .env
+             echo DBPASS=${{  secrets.dbpass  }} >> .env
       - name: SFTP Deploy
-        env:
-          DBPASS: ${{  secrets.dbpass  }}
-          DBUSER: ${{  secrets.dbuser  }}
-          DB: ${{  secrets.db  }}
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
           # username
