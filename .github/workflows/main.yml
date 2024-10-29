@@ -18,6 +18,8 @@ jobs:
             echo DB=${{  secrets.db  }} >> .env
             echo DBUSER=${{  secrets.dbuser  }} >> .env
             echo DBPASS=${{  secrets.dbpass  }} >> .env
+      - name: Show folder contents
+        run: ls -a
       - name: SFTP Deploy
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
