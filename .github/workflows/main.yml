@@ -20,4 +20,4 @@ jobs:
           username: eulbert
           password: ${{ secrets.password }}
           sourceDir: lin-todo/
-          targetDir: ./~eulbert/web/gtodo/lin-todo/
+          targetDir: hmbldtw.spdns.org/~eulbert/web/gtodo/lin-todo/
