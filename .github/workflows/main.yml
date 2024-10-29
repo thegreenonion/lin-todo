@@ -15,11 +15,11 @@ jobs:
       - name: Create variable files
         run: |
             touch vars/db.php
-            echo "<?php \$dbn=${{ secrets.db }}" >> vars/db.php
+            echo "<?php \$dbn=\"${{ secrets.db }}\"" >> vars/db.php
             touch vars/dbuser.php
-            echo "<?php \$dbuser=${{ secrets.dbuser }}" >> vars/dbuser.php
+            echo "<?php \$dbuser=\"${{ secrets.dbuser }}\"" >> vars/dbuser.php
             touch vars/dbpass.php
-            echo "<?php \$dbpass=${{ secrets.dbpass }}" >> vars/dbpass.php
+            echo "<?php \$dbpass=\"${{ secrets.dbpass }}\"" >> vars/dbpass.php
       - name: SFTP Deploy
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
