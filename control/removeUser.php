@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 // create db connection
 include("../conn.php");
 
@@ -24,6 +22,12 @@ function requestSharedUsers($db, int $LID)
 
 function createTable(array $queryresult)
 {
+    if(empty($queryresult))
+    {
+        echo "Die Liste wird mit keinen Benutzern geteilt.";
+        return;
+    }
+    
     echo "
         <table>
             <tr>
