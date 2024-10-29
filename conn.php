@@ -1,8 +1,8 @@
 <?php
-$datenbank = "eulbert_gtodo";
+$datenbank = getenv("DB");
 $host = "localhost";
-$user = "hwalde";
-$passwd = "UG2aepai4g";
+$user = getenv("DBUSER");
+$passwd = getenv("DBPASS");
 
 // Datenbankverbindung herstellen
 try {

@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <h1>Hallo, <?php echo $_SESSION['username']; ?>!</h1>
+    <h1 style="text-align: center">Hallo, <?php echo $_SESSION['username']; ?>!</h1>
     <p style="text-align: center">Es ist <?php echo date("H:i") ?> Uhr.</p>
     <br>
     <?php

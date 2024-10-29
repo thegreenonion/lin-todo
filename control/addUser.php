@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suggest Users</title>
+    <title>Liste an Benutzer freigeben</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <style>
@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
     <div class="container mt-5">
-        <h1>Suggest Users</h1>
+        <h1>Liste an Benutzer freigeben</h1>
         <form method="POST" action="">
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="mb-3">
                 <label for="LID" class="form-label">Select List</label>
-                <select class="form-control" id="LID" name="LID">
+                <select class="form-select" id="LID" name="LID">
                     <?php foreach ($lists as $list): ?>
                         <option value="<?= $list['LID'] ?>"><?= htmlspecialchars($list['name']) ?></option>
                     <?php endforeach; ?>
