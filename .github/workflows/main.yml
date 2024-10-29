@@ -18,6 +18,7 @@ jobs:
             echo DB=${{  secrets.db  }} >> .env
             echo DBUSER=${{  secrets.dbuser  }} >> .env
             echo DBPASS=${{  secrets.dbpass  }} >> .env
+            echo "!.env" > .git-ftp-include # Add git untracked file
       - name: Show folder contents
         run: ls -a
       - name: SFTP Deploy
