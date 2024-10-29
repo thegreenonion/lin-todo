@@ -1,1 +1,4 @@
 .vscode/settings.json
+vars/db.php
+vars/dbpass.php
+vars/dbuser.php
