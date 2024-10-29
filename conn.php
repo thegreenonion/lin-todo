@@ -11,4 +11,3 @@ try {
 } catch (PDOException $e) {
     die("Datenbankverbindung gescheitert: " . $e->getMessage());
 }
-?>
