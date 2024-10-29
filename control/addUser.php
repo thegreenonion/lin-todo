@@ -27,7 +27,7 @@ function AddUser($db, int $foreign_BID, int $LID)
     $result = $statement->fetch();
 
     if ($result) {
-        echo "User already has access to this list.";
+        echo "Der Benutzer hat bereits Zugriff auf die Liste.";
         return;
     }
 
@@ -37,7 +37,7 @@ function AddUser($db, int $foreign_BID, int $LID)
     $result = $statement->fetch();
 
     if (!$result) {
-        echo "List ID does not exist.";
+        echo "Die Liste existiert nicht.";
         return;
     }
 
@@ -46,14 +46,14 @@ function AddUser($db, int $foreign_BID, int $LID)
     $statement->execute([':LID' => $LID]);
     $result = $statement->fetch();
 
-    if($result['lBID'] == $foreign_BID) {
-        echo "You cannot add yourself to your own list.";
+    if ($result['lBID'] == $foreign_BID) {
+        echo "Du kannst dich nicht selbst hinzufügen.";
         return;
     }
 
     $statement = $db->prepare("INSERT INTO darfsehen (dLID, dBID) VALUES (?, ?)");
     $statement->execute([$LID, $foreign_BID]);
-    echo "User added successfully.";
+    echo "Benutzer zu Liste hinzugefügt!";
 }
 
 function GetUserLists($db, $userID)
@@ -64,7 +64,7 @@ function GetUserLists($db, $userID)
     return $statement->fetchAll(PDO::FETCH_ASSOC);
 }
 
-$userID = $_SESSION['BID']; 
+$userID = $_SESSION['BID'];
 $lists = GetUserLists($db, $userID);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -82,6 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -89,7 +90,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <style>
-
     #suggestions {
         background-color: #495057;
         border: 1px solid #6c757d;
@@ -108,13 +108,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         background-color: #6c757d;
     }
 </style>
+
 <body>
     <div class="container mt-5">
         <h1>Suggest Users</h1>
         <form method="POST" action="">
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" onkeyup="suggestUsers(this.value)">
+                <input type="text" class="form-control" id="username" name="username"
+                    onkeyup="suggestUsers(this.value)">
                 <div id="suggestions"></div>
             </div>
             <div class="mb-3">
@@ -137,18 +139,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             $.ajax({
-                url: 'https://hmbldtw.spdns.org/~tsuskov/web/lin-todo/control/sugestUsers.php', 
+                url: 'https://hmbldtw.spdns.org/~tsuskov/web/lin-todo/control/sugestUsers.php',
                 type: 'GET',
                 data: { query: query },
-                success: function(response) {
+                success: function (response) {
                     try {
                         const suggestions = JSON.parse(response);
                         let suggestionBox = document.getElementById('suggestions');
                         suggestionBox.innerHTML = '';
-                        suggestions.forEach(function(user) {
+                        suggestions.forEach(function (user) {
                             let div = document.createElement('div');
                             div.innerHTML = user.username;
-                            div.onclick = function() {
+                            div.onclick = function () {
                                 document.getElementById('username').value = user.username;
                                 suggestionBox.style.display = 'none';
                             };
@@ -160,11 +162,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         console.log("Response:", response);
                     }
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error("Error in AJAX call:", status, error);
                 }
             });
         }
     </script>
 </body>
+
 </html>

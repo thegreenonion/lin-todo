@@ -31,14 +31,11 @@ session_start();
                             <a class='nav-link' href='main.php?action=dashboard'>Home</a>
                             </li>
                             ";
+                        } else {
+                            eli("login", "Login");
+                            eli("signup", "Registrieren");
                         }
                         ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="main.php?action=login">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="main.php?action=signup">Registrieren</a>
-                        </li>
                         <?php
                         function eli($value, $name)
                         {
@@ -152,15 +149,15 @@ session_start();
         <footer class="mt-auto py-3 text-center">
             <div class="container">
                 <span>© 2024 thegreenonion, skeund89, leg0batman<br>Kontakt via GitHub<br>
-                <?php
-                include("conn.php");
+                    <?php
+                    include("conn.php");
 
-                $sql = $db->prepare("SELECT COUNT(*) as count FROM users");
-                $sql->execute();
-                $result = $sql->fetch();
-                $count = $result['count'];
-                ?>
-                Benutzerzahl: <?php echo $count; ?>
+                    $sql = $db->prepare("SELECT COUNT(*) as count FROM users");
+                    $sql->execute();
+                    $result = $sql->fetch();
+                    $count = $result['count'];
+                    ?>
+                    Benutzerzahl: <?php echo $count; ?>
                 </span>
             </div>
         </footer>
