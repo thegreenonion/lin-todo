@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 // create db connection
 include("../conn.php");
 

@@ -48,6 +48,7 @@ session_start();
                             eli("newlist", "Neue Liste");
                             eli("newitem", "Neue Aufgabe");
                             eli("adduser", "Listen freigeben");
+                            eli("removeuser", "Listen entziehen");
                             eli("logout", "Logout");
                         }
                         ?>
@@ -134,6 +135,8 @@ session_start();
                             include("control/createList.php");
                         } else if ($_GET["action"] == "adduser") {
                             include("control/addUser.php");
+                        } else if ($_GET["action"] == "removeuser") {
+                            include("control/removeUser.php");
                         }
                     } else {
                         echo "<div style='text-align: center'>";
