@@ -1,8 +1,11 @@
 <?php
-$datenbank = getenv("DB");
+include("vars/db.php");
+include("vars/dbuser.php");
+include("vars/dbpass");
+$datenbank = $dbn;
 $host = "localhost";
-$user = getenv("DBUSER");
-$passwd = getenv("DBPASS");
+$user = $dbuser;
+$passwd = $dbpass;
 
 // Datenbankverbindung herstellen
 try {
