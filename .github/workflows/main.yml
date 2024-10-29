@@ -12,23 +12,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Create .env file
+      - name: Create variable files
         run: |
-            touch .env
-            echo DB=${{  secrets.db  }} >> .env
-            echo DBUSER=${{  secrets.dbuser  }} >> .env
-            echo DBPASS=${{  secrets.dbpass  }} >> .env
-            echo "!.env" > .git-ftp-include # Add git untracked file
-      - name: Show folder contents
-        run: ls -a
+            touch vars/db.php
+            echo <?php $dbn=${{ secrets.db }} >> vars/db.php
+            touch vars/dbuser.php
+            echo <?php $dbuser=${{ secrets.dbuser }} >> vars/dbuser.php
+            touch vars/dbpass.php
+            echo <?php $dbpass=${{ secrets.dbpass }} >> vars/dbpass.php
       - name: SFTP Deploy
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
           # username
-          username: eulbert
+          username: ${{  secrets.username  }}
           # SSH passsword，If a password is set, the secret key pair is ignored
           password: ${{ secrets.password }}
           # your sftp server
-          server: hmbldtw.spdns.org
+          server: ${{ secrets.dserver }}
           # files will copy to under remote_path
-          remote_path: /home/eulbert/public_html/web/gtodo/lin-todo
+          remote_path: ${{ secrets.path }}
