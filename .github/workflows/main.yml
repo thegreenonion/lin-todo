@@ -17,9 +17,9 @@ jobs:
         with:
           # username
           username: eulbert
+          # SSH passsword，If a password is set, the secret key pair is ignored
+          password: ${{ secrets.password }}
           # your sftp server
           server: hmbldtw.spdns.org
           # files will copy to under remote_path
           remote_path: /home/eulbert/public_html/web/gtodo/lin-todo
-          # SSH passsword，If a password is set, the secret key pair is ignored
-          password: ${{ secrets.SuperSecret }}
