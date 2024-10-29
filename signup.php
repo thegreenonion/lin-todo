@@ -2,8 +2,29 @@
 include 'Hash.php';
 include("conn.php");
 
+function checkUsername($db, $username)
+{
+  $stmt = $db->prepare("SELECT username FROM users WHERE username =?");
+  $stmt->execute([$username]);
+  $result = $stmt->fetch();
+
+  if ($result['username'] == $username) {
+    return true;
+  }
+  
+  return false;
+}
+
 function signup($db, $username, $password)
 {
+  // Check if username already exists
+  if(checkUsername($db, $username))
+    {
+      echo "Username already exists"; 
+      return;
+    }
+
+  // Hash credentials, add user to db and set session
   $pepper = 'yoxxxxxxx45hghjkj';
   $hash = hashPassword($password, $pepper);
   $stmt = $db->prepare("INSERT INTO users (username, password, salt) VALUES (:username, :password, :salt)");
@@ -17,14 +38,15 @@ function signup($db, $username, $password)
   $stmt->execute();
   $user = $stmt->fetch();
   $_SESSION['BID'] = $user['BID'];
+
+  echo '<script>window.location.href = "main.php";</script>';
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $username = $_POST['username'];
   $password = $_POST['password'];
+  
   signup($db, $username, $password);
-  echo '<script>window.location.href = "main.php";</script>';
-  exit();
 }
 ?>
 
