@@ -1,5 +1,21 @@
--- Datenbank: `eulbert_gtodo`
+-- phpMyAdmin SQL Dump
+-- version 5.0.4
+-- https://www.phpmyadmin.net/
 --
+-- Host: localhost
+-- Erstellungszeit: 30. Okt 2024 um 00:07
+-- Server-Version: 8.0.39-0ubuntu0.20.04.1
+-- PHP-Version: 7.4.3-4ubuntu2.24
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
 -- --------------------------------------------------------
 
@@ -52,11 +68,6 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Daten für Tabelle `users`
---
-
-
---
 -- Indizes der exportierten Tabellen
 --
 
@@ -95,19 +106,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT für Tabelle `items`
 --
 ALTER TABLE `items`
-  MODIFY `IID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `IID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT für Tabelle `lists`
 --
 ALTER TABLE `lists`
-  MODIFY `LID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `LID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT für Tabelle `users`
 --
 ALTER TABLE `users`
-  MODIFY `BID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `BID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
 
 --
 -- Constraints der exportierten Tabellen
@@ -132,3 +143,7 @@ ALTER TABLE `items`
 ALTER TABLE `lists`
   ADD CONSTRAINT `lists_ibfk_1` FOREIGN KEY (`lBID`) REFERENCES `users` (`BID`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
