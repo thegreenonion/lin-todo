@@ -19,16 +19,15 @@ function requestSharedUsers($db, int $LID)
 
 function createTable(array $queryresult)
 {
-    if(empty($queryresult))
-    {
+    if (empty($queryresult)) {
         echo "Die Liste wird mit keinen Benutzern geteilt.";
         return;
     }
-    
+
     echo "
-        <table>
+        <table class='table table-bordered'>
             <tr>
-                <th>User</th>
+                <th>Benutzer</th>
                 <th>Entfernen</th>
             </tr>
         ";
@@ -40,7 +39,7 @@ function createTable(array $queryresult)
                 <td>
                     <form action='' method='post'>
                         <input type='hidden' name='BID' value='" . $row['BID'] . "'>
-                        <input type='submit' value='Entfernen'>
+                        <input class='btn btn-danger' type='submit' value='Entfernen'>
                     </form>
                 </td>
             </tr>
@@ -77,22 +76,28 @@ function removeUser($db, int $BID, int $LID)
     <form method="post" action="">
 
         <!-- Selection of the list with a dropdown-list of all owned lists -->
-        <select name="LID" id="list-selection">
+        <select style="width: 150px; margin-left: 20px" class="form-select" name="LID" id="list-selection">
             <?php
             // request all owned lists
             $statement = $db->prepare("SELECT LID, name FROM lists WHERE lBID=?");
             $statement->execute([$_SESSION['BID']]);
             $result = $statement->fetchAll();
+            $stmt2 = $db->prepare("SELECT * FROM darfsehen WHERE dLID = ?");
 
             foreach ($result as $row) {
+                $stmt2->execute([$row['LID']]);
+                if ($stmt2->rowCount() == 0) {
+                    continue;
+                }
                 echo "
                     <option value='" . $row['LID'] . "'>" . $row['name'] . "</option>
                 ";
             }
             ?>
         </select>
+        <br>
 
-        <input type="submit" value="Liste auswählen">
+        <input class="btn btn-info" style="margin-left: 20px" type="submit" value="Liste auswählen">
     </form>
 
     <?php
@@ -101,7 +106,8 @@ function removeUser($db, int $BID, int $LID)
         $_SESSION['LID'] = $LID;
 
         $result = requestSharedUsers($db, $LID);
-        createTable($result, $LID);
+        echo "<br>";
+        createTable($result);
     }
 
     if (isset($_POST['BID'])) {
