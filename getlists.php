@@ -52,15 +52,24 @@
                         INNER JOIN users ON users.BID = darfsehen.dBID
                         WHERE dLID = ?");
                         $stmt->execute([$row["LID"]]);
-                        $result2 = $stmt->fetchAll();
-                        $str = "";
-                        $str = $stmt->fetch()["username"];
+                        if ($stmt->rowCount() == 0) {
+                            $str = "";
+                        } else {
+                            $str = "";
+                            $str = $stmt->fetch()["username"];
+                            while ($row2 = $stmt->fetch()) {
+                                $str .= ", " . $row2["username"];
+                            }
+                            $str .= "<br><a class='text-decoration-none' href='main.php?action=removeuser'>Verwalten</a>";
+                        }
                         $cmd = "window.location.href='main.php?action=deletelist&lid=" . $row["LID"] . "'";
                         echo "<tr>
                                 <td><a href='main.php?action=getitems&lid=$row[LID]'>$row[name]</a></td>
                                 <td>$count</td>
                                 <td><span style='color: red'>$ocount</span></td>
-                                <td>$str</td>
+                                <td>
+                                $str
+                                </td>
                                 <td><button onclick=$cmd class='btn btn-danger'>Löschen</button></td>
                             </tr>";
                     }
