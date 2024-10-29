@@ -22,6 +22,12 @@ function requestSharedUsers($db, int $LID)
 
 function createTable(array $queryresult)
 {
+    if(empty($queryresult))
+    {
+        echo "Die Liste is mit keinen Benutzern geteilt.";
+        return;
+    }
+    
     echo "
         <table>
             <tr>
