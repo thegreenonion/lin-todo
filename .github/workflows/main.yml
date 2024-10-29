@@ -1,9 +1,6 @@
 name: Push to SFTP
 
-on:
-  push:
-    branches:
-      - main
+on: workflow_dispatch
 
 jobs:
   push-to-sftp:
