@@ -114,13 +114,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1>Liste an Benutzer freigeben</h1>
         <form method="POST" action="">
             <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
+                <label for="username" class="form-label">Benutzername:</label>
                 <input type="text" class="form-control" id="username" name="username"
                     onkeyup="suggestUsers(this.value)">
                 <div id="suggestions"></div>
             </div>
             <div class="mb-3">
-                <label for="LID" class="form-label">Select List</label>
+                <label for="LID" class="form-label">Liste auswählen:</label>
                 <select class="form-select" id="LID" name="LID">
                     <?php foreach ($lists as $list): ?>
                         <option value="<?= $list['LID'] ?>"><?= htmlspecialchars($list['name']) ?></option>
