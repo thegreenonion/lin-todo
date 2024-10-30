@@ -64,6 +64,12 @@ Im Anschluss stehen dem Benutzer folgende Aktionen zur Verfügung:
 Dort muss ein Name für die Liste eingegeben werden, dann kann er sie mit einem Klick auf "Erstellen" erstellen.
 Daraufhin erfolgt eine Weiterleitung zur Darstellung aller Listen des Benutzers
 
+### Liste anzeigen
+Über das Menü "Listen anzeigen" werden dem Benutzer alle Listen, sowohl eigene als auch geteilte, angezeigt.
+Neben dem Namen der Liste wird auch die Anzahl der in der Liste enthaltenen Aufgaben sowie die Anzahl der unerledigten Aufgaben angezeigt.
+In der Spalte "Geteilt mit" werden alle Accounts aufgelistet, die Leserechte auf diese Liste erhalten haben. Mit einem Klick auf "Verwalten" kann der Benutzer den Zugriff entfernen (siehe Abschnitt "Listenfreigabe entziehen").
+Mit einem Klick auf den Namen einer Liste werden dem Benutzer alle in der Liste enthaltenen Items in einer Tabelle aufgelistet. Hier kann er den Status des Items bearbeiten oder es gänzlich löschen.
+
 ### Aufgaben erstellen
 Um eine Aufgabe zu erstellen, ist eine Liste erforderlich.
 Über das Menü "Neue Aufgabe" kann eine neue Aufgabe in einer Liste erstellt werden.
@@ -78,4 +84,10 @@ In diesem Menü kann der Benutzer eine Liste, die zuvor erstellt wurde, einem an
 Dazu wird auf der Seite in das Feld "Benutzername" der Benutzername des Accounts, mit dem die Liste geteilt werden soll, eingegeben.
 Sobald Buchstaben in das Feld eingegeben wurden, schlägt TODO dem Benutzer die möglichen Accounts vor, die zu der Eingabe passen.
 Nachdem ein Benutzer ausgewählt wurde, muss aus dem Dropdown-Menü eine eigene Liste ausgewählt werden, die geteilt werden soll.
-Mit 
+Mit einem Klick auf "Liste freigeben" wird die Liste dem Benutzer freigegeben.
+
+### Listenfreigabe entziehen
+Über das Menü "Listen entziehen" kann der Benutzer den Lesezugriff von fremden Accounts auf die eigenen Listen verwalten.
+Es muss zunächst eine der eigenen Listen, die Freigaben besitzt, ausgewählt werden.
+Daraufhin wird dem Benutzer angezeigt, welche Benutzer Lesezugriff besitzen, und mit einem Klick auf "Entfernen" kann diesen der Zugriff entzogen werden.
+Wenn der Benutzer keine Listen mit Freigaben besitzt, ist das Dropdown-Menü leer.
