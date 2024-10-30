@@ -75,4 +75,7 @@ Dort kann der Benutzer Aufgaben als erledigt markieren und diese bei Bedarf lös
 
 ### Listen freigeben
 In diesem Menü kann der Benutzer eine Liste, die zuvor erstellt wurde, einem anderen Benutzer zur Ansicht freigeben.
-Dazu wird auf der Seite in das Feldd
+Dazu wird auf der Seite in das Feld "Benutzername" der Benutzername des Accounts, mit dem die Liste geteilt werden soll, eingegeben.
+Sobald Buchstaben in das Feld eingegeben wurden, schlägt TODO dem Benutzer die möglichen Accounts vor, die zu der Eingabe passen.
+Nachdem ein Benutzer ausgewählt wurde, muss aus dem Dropdown-Menü eine eigene Liste ausgewählt werden, die geteilt werden soll.
+Mit 
