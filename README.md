@@ -1,14 +1,30 @@
-# TODO-Datenbank Projekt im Rahmen des Leistungskurses Informatik 2024, Humboldt-Gymnasium Berlin
-Projekt von skeund89, leg0batman und thegreenonion
+# TODO-Datenbank Projekt
+Projekt im Rahmen des Leistungskurses Informatik 2024, Humboldt-Gymnasium Berlin
+
+## Inhaltsverzeichnis
+1. [Beschreibung](#beschreibung)
+2. [Struktur der Datenbank](#struktur-der-datenbank)
+3. [Installation](#installation)
+4. [Nutzung](#nutzung)
+5. [Beitragen](#beitragen)
+6. [Lizenz](#lizenz)
+7. [Kontakt](#kontakt)
+
+## Beschreibung
+Die App stellt eine digitale Möglichkeit zur Organisation von Aufgaben bereit.
+Alle Benutzereigenen Inhalte werden in einer Datenbank gespeichert, und diese bei Bedarf mittels PHP/PDO ausgelesen.
+Jeder Benutzer kann sich eigene TODO-Listen erstellen, und Items zu diesen hinzufügen.
+Alle Items einer Liste werden in Form einer Tabelle dargestellt.
+Darüber hinaus besteht die Möglichkeit, eine Liste mit Items einem anderen Benutzer zur Ansicht freizugeben; dieser hat nun eine Sicht auf die Items, jedoch kann er ihren Status nicht ändern.
+
 ## Struktur der Datenbank
 ### Relationales Schema
+```sql
 darf_sehen(dlid, dbid)
-
 user(BID, Passwort, salt)
-
 liste(LID, Name, IBID)
-
 item(IID, content, due, is_done, ILID)
+```
 
 ## Installation
 ### Installation auf Server ohne GitHub Repository
@@ -32,3 +48,21 @@ item(IID, content, due, is_done, ILID)
    - PATH: Dateipfad, auf dem der Inhalt des Repositorys auf dem Server abgelegt werden soll (z.B. /path/to/your/todo/app)
 3. Unter `Actions` den Workflow `Push to SFTP` ausführen.
 4. Datei `mydomain.tld/path/to/your/todo/app/main.php` ausführen und TODO benutzen.
+
+## Nutzung
+Um TODO benutzen zu können, muss der Benutzer einen Account anlegen. Dafür ist keine E-Mailadresse erforderlich, nur ein Benutzername und ein Passwort.
+Die Anmeldedaten des Benutzers werden verschlüsselt in eine Datenbank eingefügt, die Administratoren haben also keinen Zugriff auf diese.
+Im Anschluss stehen dem Benutzer folgende Aktionen zur Verfügung:
+- Listen erstellen
+- Aufgabe erstellen (Liste erforderlich)
+- Listen freigeben (Liste erforderlich)
+- Listen entziehen (Freigegebene Liste erforderlich)
+- Logout
+
+### Listenerstellung
+Über das Menü "Neue Liste" gelangt der Benutzer zur Listenerstellung.
+Dort muss ein Name für die Liste eingegeben werden, dann kann er sie mit einem Klick auf "Erstellen" erstellen.
+Daraufhin erfolgt eine Weiterleitung zur Darstellung aller Listen des Benutzers
+
+### Aufgaben erstellen
+Um eine Aufgabe zu erstellen, ist eine Liste erforderlich.
