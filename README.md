@@ -91,3 +91,26 @@ Mit einem Klick auf "Liste freigeben" wird die Liste dem Benutzer freigegeben.
 Es muss zunächst eine der eigenen Listen, die Freigaben besitzt, ausgewählt werden.
 Daraufhin wird dem Benutzer angezeigt, welche Benutzer Lesezugriff besitzen, und mit einem Klick auf "Entfernen" kann diesen der Zugriff entzogen werden.
 Wenn der Benutzer keine Listen mit Freigaben besitzt, ist das Dropdown-Menü leer.
+
+## Beitragen
+In dem Abschnitt "Issues" des Repositorys können Bugs, Hilfeanfragen oder Featurevorschläge abgegeben bzw. gemeldet werden.
+Wenn ein Featurevorschlag besteht, der von einem selbst umgesetzt werden kann, so bietet sich ein Fork des Repositorys an.
+Die Änderungen können von der Person in diesem Fork vorgenommen werden. Wenn diese umfassend getestet wurden, kann eine Pull Request gestellt werden,
+und nach Genehmigung von skeund89, leg0batman und thegreenonion wird die Pull Request gemergt und das Feature in die Orginialversion des Projektes implementiert.
+
+Wir sind jederzeit offen für Verbesserungsvorschläge, offene Fragen, Meldungen von Fehlern im Programm etc.
+
+## Lizenz
+Coming soon
+
+## Kontakt
+
+### Thegreenonion
+E-Mail: greenoniondev@gmx-topmail.de
+Kontakt via GitHub ist ebenfalls möglich.
+
+### skeund89
+tba
+
+### leg0batman
+tba
