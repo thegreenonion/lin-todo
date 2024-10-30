@@ -66,3 +66,13 @@ Daraufhin erfolgt eine Weiterleitung zur Darstellung aller Listen des Benutzers
 
 ### Aufgaben erstellen
 Um eine Aufgabe zu erstellen, ist eine Liste erforderlich.
+Über das Menü "Neue Aufgabe" kann eine neue Aufgabe in einer Liste erstellt werden.
+Auf der Seite muss der Inhalt der Aufgabe in das Feld "Name" eingegeben werden. Danach wird das Fälligkeitsdatum für die Aufgabe gesetzt.
+Durch klicken auf das Dropdown-Menü "Liste" kann der Benuter auswählen, zu welcher Liste er die Aufgabe hinzufügen möchte.
+Der Befehl wird abgeschickt mit dem Klicken auf "Hinzufügen".
+Daraufhin wird der Benutzer zur Ansicht aller Items der Liste, zu der die neue Aufgabe hinzugefügt wurde, weitergeleitet.
+Dort kann der Benutzer Aufgaben als erledigt markieren und diese bei Bedarf löschen.
+
+### Listen freigeben
+In diesem Menü kann der Benutzer eine Liste, die zuvor erstellt wurde, einem anderen Benutzer zur Ansicht freigeben.
+Dazu wird auf der Seite in das Feldd
