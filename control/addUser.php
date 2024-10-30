@@ -127,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php endforeach; ?>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Share List</button>
+            <button type="submit" class="btn btn-primary">Liste freigeben</button>
         </form>
     </div>
 
