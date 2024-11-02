@@ -60,7 +60,7 @@
                             while ($row2 = $stmt->fetch()) {
                                 $str .= ", " . $row2["username"];
                             }
-                            $str .= "<br><a class='text-decoration-none' href='main.php?action=removeuser'>Verwalten</a>";
+                            $str .= "<br><a class='text-decoration-none' href='main.php?action=removeuser&lid=" . $row["LID"] . "'>Verwalten</a>";
                         }
                         $cmd = "window.location.href='main.php?action=deletelist&lid=" . $row["LID"] . "'";
                         echo "<tr>

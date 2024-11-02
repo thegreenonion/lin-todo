@@ -89,6 +89,7 @@ function removeUser($db, int $BID, int $LID)
                 if ($stmt2->rowCount() == 0) {
                     continue;
                 }
+                $name = $row['name'];
                 echo "
                     <option value='" . $row['LID'] . "'>" . $row['name'] . "</option>
                 ";
@@ -113,6 +114,14 @@ function removeUser($db, int $BID, int $LID)
     if (isset($_POST['BID'])) {
         $BID = $_POST['BID'];
         removeUser($db, $BID, $_SESSION['LID']);
+    }
+
+    if (isset($_SESSION['LID']) && !isset($_POST['LID'])) {
+        $LID = $_SESSION['LID'];
+        $result = requestSharedUsers($db, $LID);
+        echo "<br>";
+        echo "<h2 style='margin-left: 20px; color: cream'>Benutzer, mit denen \"" . $name . "\" geteilt wird:</h2>";
+        createTable($result);
     }
     ?>
 </body>

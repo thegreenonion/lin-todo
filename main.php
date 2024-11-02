@@ -136,6 +136,11 @@ session_start();
                         } else if ($_GET["action"] == "adduser") {
                             include("control/addUser.php");
                         } else if ($_GET["action"] == "removeuser") {
+                            if (isset($_GET["lid"])) {
+                                $_SESSION["LID"] = $_GET["lid"];
+                            } else {
+                                unset($_SESSION["LID"]);
+                            }
                             include("control/removeUser.php");
                         }
                     } else {
