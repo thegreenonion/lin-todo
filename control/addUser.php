@@ -132,7 +132,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <?php
-    include("../vars/suggest_path.php");
+    include("./vars/suggest_path.php");
+    echo "<script>var path = '" . $path . "';</script>";
     ?>
 
     <script>
@@ -141,8 +142,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 document.getElementById('suggestions').style.display = 'none';
                 return;
             }
-
-            var path = "<?php echo $path; ?>";
 
             $.ajax({
                 url: path,
