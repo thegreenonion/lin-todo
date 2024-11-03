@@ -131,6 +131,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </div>
 
+    <?php
+    include("../vars/suggest_path.php");
+    ?>
+
     <script>
         function suggestUsers(query) {
             if (query.length == 0) {
@@ -138,8 +142,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 return;
             }
 
+            var path = "<?php echo $path; ?>";
+
             $.ajax({
-                url: 'https://hmbldtw.spdns.org/~tsuskov/web/lin-todo/control/sugestUsers.php',
+                url: path,
                 type: 'GET',
                 data: { query: query },
                 success: function (response) {
