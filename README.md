@@ -1,6 +1,8 @@
 # TODO-Datenbank Projekt
 Projekt im Rahmen des Leistungskurses Informatik 2024, Humboldt-Gymnasium Berlin
 
+[![Push to SFTP](https://github.com/thegreenonion/lin-todo/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/thegreenonion/lin-todo/actions/workflows/main.yml)
+
 ## Inhaltsverzeichnis
 1. [Beschreibung](#beschreibung)
 2. [Struktur der Datenbank](#struktur-der-datenbank)
