@@ -42,8 +42,9 @@ function signup($db, $username, $password)
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    // prevent XSS by using hmtlspecialchars
+    $username = htmlspecialchars($_POST['username']); 
+    $password = htmlspecialchars($_POST['password']); 
 
     signup($db, $username, $password);
 }
