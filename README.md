@@ -22,10 +22,10 @@ Darüber hinaus besteht die Möglichkeit, eine Liste mit Items einem anderen Ben
 ## Struktur der Datenbank
 ### Relationales Schema
 ```sql
-darf_sehen(dlid, dbid)
-user(BID, Passwort, salt)
-liste(LID, Name, IBID)
-item(IID, content, due, is_done, ILID)
+darfsehen(dLID::INT, dBID::INT)
+users(BID::INT, username::VARCHAR, password::VARCHAR, salt::VARCHAR)
+lists(LID::INT, name::VARCHAR, lBID::INT)
+items(IID::INT, content::VARCHAR, due::DATETIME, is_done::BOOLEAN, iLID::INT)
 ```
 
 ## Installation
