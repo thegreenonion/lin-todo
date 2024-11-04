@@ -121,5 +121,6 @@ tba
 
 ## Dank an
 Thanks to
-@wlixcc für den push-to-sftp workflow
-@wlixcc for the push-to-sftp workflow
+
+- @wlixcc für den push-to-sftp workflow
+- @wlixcc for the push-to-sftp workflow
