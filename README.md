@@ -11,6 +11,7 @@ Projekt im Rahmen des Leistungskurses Informatik 2024, Humboldt-Gymnasium Berlin
 5. [Beitragen](#beitragen)
 6. [Lizenz](#lizenz)
 7. [Kontakt](#kontakt)
+8. [Dank an](#dank-an)
 
 ## Beschreibung
 Die App stellt eine digitale Möglichkeit zur Organisation von Aufgaben bereit.
@@ -117,3 +118,8 @@ tba
 
 ### leg0batman
 tba
+
+## Dank an
+Thanks to
+@wlixcc für den push-to-sftp workflow
+@wlixcc for the push-to-sftp workflow
