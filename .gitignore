@@ -2,4 +2,3 @@
 vars/db.php
 vars/dbpass.php
 vars/dbuser.php
-vars/suggest_path.php
