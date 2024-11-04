@@ -131,11 +131,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </div>
 
-    <?php
-    include("./vars/suggest_path.php");
-    echo "<script>var path = '" . $path . "';</script>";
-    ?>
-
     <script>
         function suggestUsers(query) {
             if (query.length == 0) {
@@ -144,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             $.ajax({
-                url: path,
+                url: './control/suggestUsers.php',
                 type: 'GET',
                 data: { query: query },
                 success: function (response) {
