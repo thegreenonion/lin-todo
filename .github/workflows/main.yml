@@ -18,7 +18,7 @@ jobs:
             touch vars/dbpass.php
             echo "<?php \$dbpass=\"${{ secrets.dbpass }}\";" >> vars/dbpass.php
             touch vars/suggest_path.php
-            echo "<?php \$path=\"${{ format('{0}/{1}/control/suggestUsers.php', secrets.dserver, secrets.path) }}\";" >> vars/suggest_path.php
+            echo "<?php \$path=\"${{ format('{0}{1}/control/suggestUsers.php', secrets.dserver, secrets.path) }}\";" >> vars/suggest_path.php
       - name: SFTP Deploy
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
