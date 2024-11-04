@@ -35,7 +35,6 @@ item(IID, content, due, is_done, ILID)
    - db.php: `<?php $db="<Datenbank-Name>";`
    - dbuser.php: `<?php $dbuser="<Datenbank-Benutzer>";`
    - dbpass.php: `<?php $dbpass="<Datenbank-Passwort>";`
-   - suggest_path.php: `<?php $path="<Pfad zu der Datei control/suggestUsers.php>"` (z.B. mydomain.tld/path/to/todo/lin-todo/control/suggestUsers.php)
 5. Datei `main.php` im Browser aufrufen und TODO nutzen.
 ### Installation auf Server mit GitHub Repository
 1. Repository forken.
@@ -47,7 +46,6 @@ item(IID, content, due, is_done, ILID)
    - USERNAME: Benutzername für den FTP Server, auf dem das Projekt ausgeführt werden soll
    - PASSWORD: Passwort für den FTP Server, auf dem das Projekt ausgeführt werden soll
    - PATH: Dateipfad, auf dem der Inhalt des Repositorys auf dem Server abgelegt werden soll (z.B. /path/to/your/todo/app)
-   - SUGGEST_PATH: Dateipfad zu der Datei control/suggest_users.php auf dem Server (z.B. mydomain.tld/path/to/todo/lin-todo/control/suggestUsers.php)
 3. Unter `Actions` den Workflow `Push to SFTP` ausführen.
 4. Datei `mydomain.tld/path/to/your/todo/app/main.php` ausführen und TODO benutzen.
 
