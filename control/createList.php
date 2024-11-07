@@ -5,11 +5,14 @@ function create_list($BID, string $title)
     // create connection to database
     include("./conn.php");
 
+    // prevent XSS by converting special characters to HTML entities (example)
+    $stitle = htmlspecialchars($title);
+
     // send creation query of list to database    
     try {
         $sql = "INSERT INTO `lists` (`name`, `lBID`) VALUES (?, ?);";
         $statement = $db->prepare($sql);
-        $statement->execute([$title, $BID]);
+        $statement->execute([$stitle, $BID]);
     } catch (Exception $e) {
         die("Loginvorgang gescheitert: " . $e->getMessage());
     }
