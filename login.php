@@ -5,9 +5,9 @@ include("conn.php");
 
 function Login($pdo_db, $username, $password)
 {
-    // request hashed password from database
+    // request hashed password and BID from database
     try {
-        $statement = $pdo_db->prepare("SELECT username, password, salt FROM users WHERE username =?");
+        $statement = $pdo_db->prepare("SELECT username, BID, password, salt FROM users WHERE username =?");
         $statement->execute([$username]);
     } catch (Exception $e) {
         die("Loginvorgang gescheitert: " . $e->getMessage());
@@ -19,6 +19,7 @@ function Login($pdo_db, $username, $password)
         echo "Die Eingabe war falsch. Bitte versuche es normal.";
         exit();
     }
+    $bid = $fetched_statement['BID'];
     $db_password = $fetched_statement['password'];
     $salt = $fetched_statement['salt'];
 
@@ -31,24 +32,11 @@ function Login($pdo_db, $username, $password)
         exit();
     }
 
-    // request username and BID with hashed password
-    try {
-        $statement = $pdo_db->prepare("SELECT username, BID FROM users WHERE username =? AND password=?");
-        $statement->execute([$username, $verification_result['hashed_password']]);
-    } catch (Exception $e) {
-        die("Loginvorgang gescheitert: " . $e->getMessage());
-    }
-
-    $result = $statement->fetch();
-    // set session variables and redirect to dashboard if result of query is not 0
-    if (count($result) != 0) {
-        $_SESSION['username'] = $result['username'];
-        $_SESSION['BID'] = $result['BID'];
-        echo "<script type='text/javascript'>location.href = './main.php?action=dashboard';</script>";
-        exit();
-    } else {
-        echo "Die Eingabe war falsch. Bitte versuche es normal.";
-    }
+    // set session variables and redirect to dashboard if password is correct
+    $_SESSION['username'] = $username;
+    $_SESSION['BID'] = $bid;
+    echo "<script type='text/javascript'>location.href = './main.php?action=dashboard';</script>";
+    exit();
 }
 ?>
 <html>
