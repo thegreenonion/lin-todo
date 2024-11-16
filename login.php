@@ -3,18 +3,28 @@ include("Hash.php");
 
 include("conn.php");
 
-function Login($pdo_db, $username, $password)
+/**
+ * Logs in a user by verifying the provided username and password against the credentials in the database.
+ * 
+ * Note: Each user has a unique username.
+ * 
+ * parameters:
+ * - $pdo_db: PDO database connection
+ * - $username: username of the user
+ * - $password: password of the user
+ */
+function Login($pdo_db, string $username, string $password)
 {
-    // request hashed password and BID from database
+    // request username, BID, hashed password and salt of username from database
     try {
         $statement = $pdo_db->prepare("SELECT username, BID, password, salt FROM users WHERE username =?");
         $statement->execute([$username]);
     } catch (Exception $e) {
         die("Loginvorgang gescheitert: " . $e->getMessage());
     }
+    $fetched_statement = $statement->fetch(); // fetch request
 
-    // fetch database password + salt and hash password of form with salt and pepper 
-    $fetched_statement = $statement->fetch();
+    // check if database has returned a result (array is not empty)
     if (!$fetched_statement) {
         echo "Die Eingabe war falsch. Bitte versuche es normal.";
         exit();
@@ -26,7 +36,7 @@ function Login($pdo_db, $username, $password)
     $pepper = 'yoxxxxxxx45hghjkj';
     $verification_result = verifyPassword($password, $db_password, $salt, $pepper);
 
-    // compare database password with freshly hashed password
+    // check if verification was successful
     if ($verification_result['hashesMatch'] == FALSE) {
         echo "Die Eingabe war falsch. Bitte versuche es normal.";
         exit();
