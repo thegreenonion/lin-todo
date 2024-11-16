@@ -33,11 +33,9 @@ function Login($pdo_db, string $username, string $password)
     $db_password = $fetched_statement['password'];
     $salt = $fetched_statement['salt'];
 
+    // Verify the password
     $pepper = 'yoxxxxxxx45hghjkj';
-    $verification_result = verifyPassword($password, $db_password, $salt, $pepper);
-
-    // check if verification was successful
-    if ($verification_result['hashesMatch'] == FALSE) {
+    if (!verifyPassword($password, $db_password, $salt, $pepper)) {
         echo "Die Eingabe war falsch. Bitte versuche es normal.";
         exit();
     }
