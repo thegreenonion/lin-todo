@@ -3,52 +3,48 @@ include("Hash.php");
 
 include("conn.php");
 
-function Login($pdo_db, $username, $password)
+/**
+ * Logs in a user by verifying the provided username and password against the credentials in the database.
+ * 
+ * Note: Each user has a unique username.
+ * 
+ * parameters:
+ * - $pdo_db: PDO database connection
+ * - $username: username of the user
+ * - $password: password of the user
+ */
+function Login($pdo_db, string $username, string $password)
 {
-    // request hashed password from database
+    // request username, BID, hashed password and salt of username from database
     try {
-        $statement = $pdo_db->prepare("SELECT username, password, salt FROM users WHERE username =?");
+        $statement = $pdo_db->prepare("SELECT username, BID, password, salt FROM users WHERE username =?");
         $statement->execute([$username]);
     } catch (Exception $e) {
         die("Loginvorgang gescheitert: " . $e->getMessage());
     }
+    $fetched_statement = $statement->fetch(); // fetch request
 
-    // fetch database password + salt and hash password of form with salt and pepper 
-    $fetched_statement = $statement->fetch();
+    // check if database has returned a result (array is not empty)
     if (!$fetched_statement) {
         echo "Die Eingabe war falsch. Bitte versuche es normal.";
         exit();
     }
+    $bid = $fetched_statement['BID'];
     $db_password = $fetched_statement['password'];
     $salt = $fetched_statement['salt'];
 
+    // Verify the password
     $pepper = 'yoxxxxxxx45hghjkj';
-    $verification_result = verifyPassword($password, $db_password, $salt, $pepper);
-
-    // compare database password with freshly hashed password
-    if ($verification_result['hashesMatch'] == FALSE) {
+    if (!verifyPassword($password, $db_password, $salt, $pepper)) {
         echo "Die Eingabe war falsch. Bitte versuche es normal.";
         exit();
     }
 
-    // request username and BID with hashed password
-    try {
-        $statement = $pdo_db->prepare("SELECT username, BID FROM users WHERE username =? AND password=?");
-        $statement->execute([$username, $verification_result['hashed_password']]);
-    } catch (Exception $e) {
-        die("Loginvorgang gescheitert: " . $e->getMessage());
-    }
-
-    $result = $statement->fetch();
-    // set session variables and redirect to dashboard if result of query is not 0
-    if (count($result) != 0) {
-        $_SESSION['username'] = $result['username'];
-        $_SESSION['BID'] = $result['BID'];
-        echo "<script type='text/javascript'>location.href = './main.php?action=dashboard';</script>";
-        exit();
-    } else {
-        echo "Die Eingabe war falsch. Bitte versuche es normal.";
-    }
+    // set session variables and redirect to dashboard if password is correct
+    $_SESSION['username'] = $username;
+    $_SESSION['BID'] = $bid;
+    echo "<script type='text/javascript'>location.href = './main.php?action=dashboard';</script>";
+    exit();
 }
 ?>
 <html>
