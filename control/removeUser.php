@@ -73,22 +73,27 @@ function removeUser($db, int $BID, int $LID)
 
 <body>
 
+    <!-- Form to select a list and display all users that have access to it -->
     <form method="post" action="">
 
-        <!-- Selection of the list with a dropdown-list of all owned lists -->
+        <!-- Selection of the wanted list with a dropdown-list of all shared lists -->
         <select style="width: 150px; margin-left: 20px" class="form-select" name="LID" id="list-selection">
             <?php
             // request all owned lists
             $statement = $db->prepare("SELECT LID, name FROM lists WHERE lBID=?");
             $statement->execute([$_SESSION['BID']]);
             $result = $statement->fetchAll();
+
             $stmt2 = $db->prepare("SELECT * FROM darfsehen WHERE dLID = ?");
 
+            // create dropdown-list with all shared lists
             foreach ($result as $row) {
                 $stmt2->execute([$row['LID']]);
+                
                 if ($stmt2->rowCount() == 0) {
                     continue;
                 }
+                
                 $name = $row['name'];
                 echo "
                     <option value='" . $row['LID'] . "'>" . $row['name'] . "</option>

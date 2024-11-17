@@ -112,13 +112,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="container mt-5">
         <h1>Liste an Benutzer freigeben</h1>
+        
+        <!-- Form for releasing a list to a user -->
         <form method="POST" action="">
+            
+            <!-- username input -->
             <div class="mb-3">
                 <label for="username" class="form-label">Benutzername:</label>
                 <input type="text" class="form-control" id="username" name="username"
                     onkeyup="suggestUsers(this.value)">
                 <div id="suggestions"></div>
             </div>
+
+            <!-- list selection with drop-down list-->
             <div class="mb-3">
                 <label for="LID" class="form-label">Liste auswählen:</label>
                 <select class="form-select" id="LID" name="LID">
@@ -127,8 +133,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php endforeach; ?>
                 </select>
             </div>
+            
+            <!-- Submit button -->
             <button type="submit" class="btn btn-primary">Liste freigeben</button>
         </form>
+    
     </div>
 
     <script>
