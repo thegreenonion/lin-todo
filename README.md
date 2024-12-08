@@ -103,6 +103,10 @@ und nach Genehmigung von skeund89, leg0batman und thegreenonion wird die Pull Re
 
 Wir sind jederzeit offen für Verbesserungsvorschläge, offene Fragen, Meldungen von Fehlern im Programm etc.
 
+## Bekannte Fehler
+Zurzeit ist die Funktionalität, anderen Usern die eigenen Listen nicht mehr freizugeben, eingeschränkt.
+Es wird an einem fix gearbeitet.
+
 ## Lizenz
 Coming soon
 

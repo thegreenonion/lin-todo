@@ -14,7 +14,7 @@ session_start();
 
 <body>
     <div class="container-fluid">
-        <!-- Responsive Navbar -->
+        <!-- Responsive Navbar and title-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="main.php">TODO-Applikation</a>
