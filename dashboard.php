@@ -26,6 +26,19 @@
         $ocount = $stmt->fetch()[0];
         $x += $ocount;
     }
+
+    function compareByTimeDesc($a, $b)
+    {
+        $ta = strtotime($a['due']);
+        $tb = strtotime($b['due']);
+        if ($ta < $tb) {
+            return -1;
+        } else if ($ta > $tb) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
     ?>
     <h4 style="margin-left: 10px">Schnelle Übersicht:</h4>
     <p style="margin-left: 20px">
@@ -36,8 +49,40 @@
         Davon sind <span style="color: red"><?php echo $x; ?></span> noch nicht erledigt.
         <br>
         <a href="main.php?action=getlists" style="color: lightblue">Zur Übersicht</a>
+        <br>
+        <br>
+        Die nächsten drei Aufgaben sind:
+
+        <?php
+        $stmt = $db->prepare("SELECT items.content, items.due, items.iLID FROM lists
+        INNER JOIN items ON items.iLID = lists.LID WHERE lists.lBID = ? AND items.is_done = 0");
+        $stmt->execute([$_SESSION['BID']]);
+        $result = $stmt->fetchAll();
+        usort($result, "compareByTimeDesc");
+
+        echo "<table class='table table-bordered' style='width: 500px; margin-left: 20px'>";
+        echo "<tr>
+        <th>Aufgabe</th>
+        <th>Fällig am</th>
+        <th>Liste</th>
+        </tr>";
+        $i = 0;
+        foreach ($result as $row) {
+            if ($i < 3) {
+                $stmt = $db->prepare("SELECT name FROM lists WHERE LID = ?");
+                $stmt->execute([$row['iLID']]);
+                $listname = $stmt->fetch()[0];
+                echo "<tr>";
+                echo "<td>" . $row['content'] . "</td>";
+                echo "<td>" . $row['due'] . "</td>";
+                echo "<td>" . $listname . "</td>";
+                echo "</tr>";
+                $i++;
+            }
+        }
+        echo "</table>";
+        ?>
     </p>
-    <p></p>
 </body>
 
 </html>
