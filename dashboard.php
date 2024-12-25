@@ -58,6 +58,10 @@
         INNER JOIN items ON items.iLID = lists.LID WHERE lists.lBID = ? AND items.is_done = 0");
         $stmt->execute([$_SESSION['BID']]);
         $result = $stmt->fetchAll();
+        if (count($result) == 0) {
+            echo "<span style='color: green'><br>Keine Aufgaben vorhanden.</span>";
+            return;
+        }
         usort($result, "compareByTimeDesc");
 
         echo "<table class='table table-bordered' style='width: 500px; margin-left: 20px'>";
