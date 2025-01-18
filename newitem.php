@@ -7,6 +7,17 @@ include("conn.php");
 
 <body>
     <h1>Neues Item zu Liste hinzufügen:</h1>
+    <?php
+    $sql = "SELECT * FROM lists WHERE lBID = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->execute([$_SESSION["BID"]]);
+    $result = $stmt->fetchAll();
+    if(count($result) == 0){
+        echo "<h2 style='color: red'>Zuerst Liste erstellen</h2>";
+        echo "<a style='color: cream; font-size: 20px' href='main.php?action=newlist'>Liste erstellen</a>";
+        die();
+    }
+    ?>
     <form action="control/setitem.php" method="post">
         <label for="content">Name:</label>
         <input type="text" id="content" name="content" required>

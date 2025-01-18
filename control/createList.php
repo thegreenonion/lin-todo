@@ -33,8 +33,11 @@ function create_list($BID, string $title)
     }
     ?>
     <form method='post' action="">
+        <label style="font-size: 20px; margin-right: 5px;" for="title">Listenname:</label>
         <input type="text" name="title">
-        <input type="submit" value="Erstellen" style="background-color: #007bff; border-color: #007bff;">
+        <br>
+        <br>
+        <input class="btn btn-primary" type="submit" value="Erstellen" style="background-color: #007bff; border-color: #007bff;">
     </form>
 
 </body>
