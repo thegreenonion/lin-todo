@@ -1,12 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 5.0.4
--- https://www.phpmyadmin.net/
---
--- Host: localhost
--- Erstellungszeit: 30. Okt 2024 um 00:07
--- Server-Version: 8.0.39-0ubuntu0.20.04.1
--- PHP-Version: 7.4.3-4ubuntu2.24
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
