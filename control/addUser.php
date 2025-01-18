@@ -120,14 +120,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="mb-3">
                 <label for="username" class="form-label">Benutzername:</label>
                 <input type="text" class="form-control" id="username" name="username"
-                    onkeyup="suggestUsers(this.value)">
+                    onkeyup="suggestUsers(this.value)" required>
                 <div id="suggestions"></div>
             </div>
 
             <!-- list selection with drop-down list-->
             <div class="mb-3">
                 <label for="LID" class="form-label">Liste auswählen:</label>
-                <select class="form-select" id="LID" name="LID">
+                <select class="form-select" id="LID" name="LID" required>
                     <?php foreach ($lists as $list): ?>
                         <option value="<?= $list['LID'] ?>"><?= htmlspecialchars($list['name']) ?></option>
                     <?php endforeach; ?>
