@@ -3,3 +3,4 @@ vars/db.php
 vars/dbpass.php
 vars/dbuser.php
 debug.log
+**/.DS_Store
